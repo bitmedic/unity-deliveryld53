@@ -53,4 +53,17 @@ public class DrunkPlayer : MonoBehaviour
 
         transform.position += swerveTarget * playerSpeed * Time.deltaTime;
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.tag == "Guest")
+        {
+            Guest guest = collision.collider.GetComponent<Guest>();
+            if (guest.HasOrder())
+            {
+                Guest.OrderType order = guest.TakeOrder(this);
+                Debug.Log("Touched guest wants: " + guest.actualOrder + ". I will bring " + order);
+            }
+        }
+    }
 }
