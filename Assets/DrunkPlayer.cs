@@ -16,7 +16,6 @@ public class DrunkPlayer : MonoBehaviour
     public bool moveInXZ;
 
     private Animator walkingAnimation;
-    public Transform playerBody;
 
     void Awake()
     {
@@ -52,7 +51,8 @@ public class DrunkPlayer : MonoBehaviour
         }
         else
         {
-            if (playerBody != null) playerBody.rotation = Quaternion.LookRotation(swerveTarget);
+            //CalculateRotation(transform, Vector3.zero, input);
+            CalculateRotation(transform, Vector3.zero, swerveTarget);
             if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", true);
         }
 
@@ -62,6 +62,13 @@ public class DrunkPlayer : MonoBehaviour
         }
 
         transform.position += swerveTarget * playerSpeed * Time.deltaTime;
+    }
+
+    void CalculateRotation(Transform t, Vector3 pos1, Vector3 pos2)
+    {
+        float angle = Mathf.Atan2(pos1.y - pos2.y, pos1.x - pos2.x) * 180 / Mathf.PI;
+        angle += 90;
+        t.localRotation = Quaternion.Euler(0, 0, angle); 
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
