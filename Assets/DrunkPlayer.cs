@@ -20,15 +20,24 @@ public class DrunkPlayer : MonoBehaviour
 
     public List<Guest.OrderType> carryingOrders;
     public GameObject carryingOrdersDisplay;
+    private Animator walkingAnimation;
 
     void Awake()
     {
         Instance = this;
         rememberedOrders = new List<Guest.OrderType>();
+        walkingAnimation = GetComponentInChildren<Animator>();
     }
 
     void Update()
     {
+        bool strafing = false; // don't rotate while moving
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            strafing = true;
+        }
+
         if (Input.GetKeyDown(KeyCode.KeypadPlus))
         {
             pegel += .01f;
@@ -51,6 +60,13 @@ public class DrunkPlayer : MonoBehaviour
         if (input.magnitude == 0) // only if player not moves at all
         {
             swerveTarget *= 0.1f; // swaying in place
+            if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", false);
+        }
+        else
+        {
+            //CalculateRotation(transform, Vector3.zero, input);
+            if (!strafing) CalculateRotation(transform, Vector3.zero, swerveTarget);
+            if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", true);
         }
 
         if (moveInXZ)
@@ -59,6 +75,13 @@ public class DrunkPlayer : MonoBehaviour
         }
 
         transform.position += swerveTarget * playerSpeed * Time.deltaTime;
+    }
+
+    void CalculateRotation(Transform t, Vector3 pos1, Vector3 pos2)
+    {
+        float angle = Mathf.Atan2(pos1.y - pos2.y, pos1.x - pos2.x) * 180 / Mathf.PI;
+        angle += 90;
+        t.localRotation = Quaternion.Euler(0, 0, angle); 
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
