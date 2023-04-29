@@ -5,6 +5,8 @@ using UnityEngine;
 public class DrunkPlayer : MonoBehaviour
 {
 
+    public float pegel = .5f;
+
     public static DrunkPlayer Instance { get; private set; }
 
     public float playerSpeed;
@@ -20,11 +22,22 @@ public class DrunkPlayer : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.KeypadPlus))
+        {
+            pegel += .01f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.KeypadMinus))
+        {
+            pegel -= .05f;
+        }
+
+
         Vector3 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         float offsetX = drunknessAmount * (Mathf.PerlinNoise1D(Time.time * drunknessSpeed) - 0.5f); // Mathf.Sin(Time.time * drunknessSpeed);
         float offsetY = drunknessAmount * (Mathf.PerlinNoise1D(Time.time * drunknessSpeed) - 0.5f); // Mathf.Sin(Time.time * drunknessSpeed);
-        Vector3 swerveTarget = input + new Vector3(offsetX, offsetY, 0); // input + offset
+        Vector3 swerveTarget = input + new Vector3(offsetX, offsetY, 0) * pegel; // input + offset
 
         swerveTarget = swerveTarget.normalized;
         
