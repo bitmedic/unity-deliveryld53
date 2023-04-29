@@ -21,12 +21,14 @@ public class DrunkPlayer : MonoBehaviour
     public List<Guest.OrderType> carryingOrders;
     public GameObject carryingOrdersDisplay;
     private Animator walkingAnimation;
+    private Transform character;
 
     void Awake()
     {
         Instance = this;
         rememberedOrders = new List<Guest.OrderType>();
         walkingAnimation = GetComponentInChildren<Animator>();
+        character = transform.Find("Character");
     }
 
     void Update()
@@ -49,7 +51,7 @@ public class DrunkPlayer : MonoBehaviour
         }
 
 
-        Vector3 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        Vector3 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
         float offsetX = drunknessAmount * (Mathf.PerlinNoise1D(Time.time * drunknessSpeed) - 0.5f); // Mathf.Sin(Time.time * drunknessSpeed);
         float offsetY = drunknessAmount * (Mathf.PerlinNoise1D(Time.time * drunknessSpeed) - 0.5f); // Mathf.Sin(Time.time * drunknessSpeed);
@@ -64,8 +66,8 @@ public class DrunkPlayer : MonoBehaviour
         }
         else
         {
-            //CalculateRotation(transform, Vector3.zero, input);
-            if (!strafing) CalculateRotation(transform, Vector3.zero, swerveTarget);
+            //UpdateRotation(transform, Vector3.zero, input);
+            if (!strafing) UpdateRotation(Vector3.zero, swerveTarget);
             if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", true);
         }
 
@@ -77,11 +79,11 @@ public class DrunkPlayer : MonoBehaviour
         transform.position += swerveTarget * playerSpeed * Time.deltaTime;
     }
 
-    void CalculateRotation(Transform t, Vector3 pos1, Vector3 pos2)
+    void UpdateRotation(Vector3 pos1, Vector3 pos2)
     {
         float angle = Mathf.Atan2(pos1.y - pos2.y, pos1.x - pos2.x) * 180 / Mathf.PI;
         angle += 90;
-        t.localRotation = Quaternion.Euler(0, 0, angle); 
+        character.localRotation = Quaternion.Euler(0, 0, angle);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
