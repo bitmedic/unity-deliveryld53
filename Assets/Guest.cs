@@ -74,8 +74,8 @@ public class Guest : MonoBehaviour
         return memorizedOrder;
     }
 
-    public bool HasOrder()
+    public bool HasNewOrder()
     {
-        return actualOrder != OrderType.None;
+        return actualOrder != OrderType.None && memorizedOrder == OrderType.None;
     }
 }
