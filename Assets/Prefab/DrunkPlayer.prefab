@@ -206,7 +206,7 @@ GameObject:
   - component: {fileID: 3671319388574487053}
   m_Layer: 0
   m_Name: DrunkPlayer
-  m_TagString: Untagged
+  m_TagString: Guest
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -222,8 +222,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3036725504748561176}
+  m_Children: [{fileID: 3036725504748561176}]
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -268,7 +267,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b,
+    type: 3}
   m_Color: {r: 0.71132076, g: 0.87095094, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -323,7 +323,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &8402248655553032604
 CircleCollider2D:
   m_ObjectHideFlags: 0
