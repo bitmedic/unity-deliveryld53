@@ -38,7 +38,7 @@ public class Guest : MonoBehaviour
     {
         if (actualOrder == OrderType.None && Time.time > nextOrder)
         {
-            nextOrder = Time.time + Random.Range(orderDelayMin, orderDelayMax);
+            nextOrder = float.MaxValue; // disable new order until fulfilled
             actualOrder = OrderType.Beer; // random this
         }
 
@@ -77,5 +77,20 @@ public class Guest : MonoBehaviour
     public bool HasNewOrder()
     {
         return actualOrder != OrderType.None && memorizedOrder == OrderType.None;
+    }
+
+    public bool Deliver(OrderType order)
+    {
+        if (order == actualOrder)
+        {
+            nextOrder = Time.time + Random.Range(orderDelayMin, orderDelayMax);
+            actualOrder = Guest.OrderType.None;
+            memorizedOrder = Guest.OrderType.None;
+            return true;
+        }
+        else
+        {
+            return false; // what else should happen in case the wrong order was memorized? 
+        }
     }
 }
