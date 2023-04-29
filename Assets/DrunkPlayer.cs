@@ -15,9 +15,13 @@ public class DrunkPlayer : MonoBehaviour
 
     public bool moveInXZ;
 
+    private Animator walkingAnimation;
+    public Transform playerBody;
+
     void Awake()
     {
         Instance = this;
+        walkingAnimation = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -40,10 +44,16 @@ public class DrunkPlayer : MonoBehaviour
         Vector3 swerveTarget = input + new Vector3(offsetX, offsetY, 0) * pegel; // input + offset
 
         swerveTarget = swerveTarget.normalized;
-        
+
         if (input.magnitude == 0) // only if player not moves at all
         {
             swerveTarget *= 0.1f; // swaying in place
+            if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", false);
+        }
+        else
+        {
+            if (playerBody != null) playerBody.rotation = Quaternion.LookRotation(swerveTarget);
+            if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", true);
         }
 
         if (moveInXZ)
