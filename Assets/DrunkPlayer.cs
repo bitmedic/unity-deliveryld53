@@ -15,11 +15,17 @@ public class DrunkPlayer : MonoBehaviour
 
     public bool moveInXZ;
 
+    public List<Guest.OrderType> rememberedOrders;
+    public GameObject rememberedOrdersDisplay;
+
+    public List<Guest.OrderType> carryingOrders;
+    public GameObject carryingOrdersDisplay;
     private Animator walkingAnimation;
 
     void Awake()
     {
         Instance = this;
+        rememberedOrders = new List<Guest.OrderType>();
         walkingAnimation = GetComponentInChildren<Animator>();
     }
 
@@ -83,10 +89,45 @@ public class DrunkPlayer : MonoBehaviour
         if (collision.collider.tag == "Guest")
         {
             Guest guest = collision.collider.GetComponent<Guest>();
-            if (guest.HasOrder())
+            if (guest.HasNewOrder() && rememberedOrders.Count < 5) // somehow display full brain and not taking an order
             {
                 Guest.OrderType order = guest.TakeOrder(this);
                 Debug.Log("Touched guest wants: " + guest.actualOrder + ". I will bring " + order);
+                rememberedOrders.Add(order);
+                if (rememberedOrders.Count > 0)
+                {
+                    rememberedOrdersDisplay.SetActive(true);
+                    var orderRenderers = rememberedOrdersDisplay.GetComponentsInChildren<SpriteRenderer>(true);
+                    for (int i = 1; i < orderRenderers.Length; i++)
+                    {
+                        orderRenderers[i].gameObject.SetActive(i - 1 < rememberedOrders.Count);
+                        // TODO also update displayed order
+                    }
+                }
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "DraftZone")
+        {
+            if (carryingOrders.Count == 0 && rememberedOrders.Count > 0)
+            {
+                foreach (var order in rememberedOrders)
+                {
+                    carryingOrders.Add(order);
+                }
+
+                rememberedOrders.Clear();
+                rememberedOrdersDisplay.SetActive(false);
+                carryingOrdersDisplay.SetActive(true);
+
+                var orderRenderers = carryingOrdersDisplay.GetComponentsInChildren<SpriteRenderer>(true);
+                for (int i = 1; i < orderRenderers.Length; i++)
+                {
+                    orderRenderers[i].gameObject.SetActive(i - 1 < carryingOrders.Count);
+                }
             }
         }
     }
