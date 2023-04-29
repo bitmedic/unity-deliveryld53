@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5851681674937808065}
   - component: {fileID: 4643307951845756081}
   - component: {fileID: 8630489216895296665}
+  - component: {fileID: 9002894248315532661}
   m_Layer: 0
   m_Name: Guest
   m_TagString: Untagged
@@ -134,7 +135,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 100
-  m_LinearDrag: 0
+  m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -148,3 +149,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &9002894248315532661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5370494466094992062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62873dcee183c9c4fad9d7df544516ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guestSpeed: 1
+  target: {fileID: 0}
