@@ -25,6 +25,13 @@ public class DrunkPlayer : MonoBehaviour
 
     void Update()
     {
+        bool strafing = false; // don't rotate while moving
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            strafing = true;
+        }
+
         if (Input.GetKeyDown(KeyCode.KeypadPlus))
         {
             pegel += .01f;
@@ -52,7 +59,7 @@ public class DrunkPlayer : MonoBehaviour
         else
         {
             //CalculateRotation(transform, Vector3.zero, input);
-            CalculateRotation(transform, Vector3.zero, swerveTarget);
+            if (!strafing) CalculateRotation(transform, Vector3.zero, swerveTarget);
             if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", true);
         }
 
