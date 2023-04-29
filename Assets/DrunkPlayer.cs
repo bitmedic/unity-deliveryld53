@@ -11,6 +11,8 @@ public class DrunkPlayer : MonoBehaviour
     public float drunknessAmount; // how strong the extend of the sway is
     public float drunknessSpeed; // how much/fast the movement direction changes 
 
+    public bool moveInXZ;
+
     void Awake()
     {
         Instance = this;
@@ -31,6 +33,10 @@ public class DrunkPlayer : MonoBehaviour
             swerveTarget *= 0.1f; // swaying in place
         }
 
+        if (moveInXZ)
+        {
+            swerveTarget = new Vector3(swerveTarget.x, 0f, swerveTarget.y);
+        }
 
         transform.position += swerveTarget * playerSpeed * Time.deltaTime;
     }
