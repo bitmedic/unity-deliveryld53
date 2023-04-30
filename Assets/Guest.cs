@@ -34,7 +34,7 @@ public partial class Guest : MonoBehaviour
 
     public enum GuestState
     {
-        Entering, Waiting, Ordering, Drinking, Leaving
+        Entering, WaitingToOrder, Ordering, HasOrdered, Drinking, Leaving
     }
 
     private void Awake()
@@ -95,7 +95,8 @@ public partial class Guest : MonoBehaviour
         {
             StopCoroutine(waitCoroutine); // they dont leave after taking the order
         }
-        orderedOrder = wantedOrder; // give a chance to misremember;
+        orderedOrder = wantedOrder;
+        state = GuestState.HasOrdered;
         return orderedOrder;
     }
 
@@ -106,7 +107,7 @@ public partial class Guest : MonoBehaviour
 
     public bool CanOrder()
     {
-        return state == GuestState.Waiting;
+        return state == GuestState.WaitingToOrder;
     }
 
     public bool Deliver(OrderType order)
@@ -131,16 +132,14 @@ public partial class Guest : MonoBehaviour
     private IEnumerator FinishDrink(float seconds)
     {
         yield return new WaitForSeconds(seconds);
-        state = GuestState.Waiting;
+        state = GuestState.WaitingToOrder;
         drinkInHandView.ShowDrink(EnumDrink.None);
     }
 
     public void DecideOrder()
     {
-        if (state == GuestState.Waiting)
+        if (state == GuestState.WaitingToOrder)
         {
-            drinkInHandView.ShowDrink(EnumDrink.None); // clear previous drink in hand
-
             var possibleOrders = OrderAndDeliver.Instance.possibleOrders;
             wantedOrder = possibleOrders[Random.Range(0, possibleOrders.Count)];
             state = GuestState.Ordering;
@@ -203,7 +202,7 @@ public partial class Guest : MonoBehaviour
             transform.rotation = seat.transform.rotation;
             character.transform.localRotation = Quaternion.identity;
             Debug.Log(name + " is ready to order");
-            state = GuestState.Waiting;
+            state = GuestState.WaitingToOrder;
         }
 
         if (state == GuestState.Leaving && collision.CompareTag("Killzone"))

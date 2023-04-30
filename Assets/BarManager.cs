@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+
 
 public class BarManager : MonoBehaviour
 {
@@ -20,23 +22,27 @@ public class BarManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void NewOrder()
     {
         Guest[] guests = (Guest[])FindObjectsOfType(typeof(Guest));
 
-        var randomGuest = guests[Random.Range(0, guests.Length)];
-        if (randomGuest.CanOrder())
-        {
-            Debug.Log(randomGuest.name + " is ordering");
-            randomGuest.DecideOrder();
-        }
-        else
-        {
-            Debug.Log(randomGuest.name + " is not ready " + randomGuest.state);
-        }
+        var waitingGuests = guests.Where(g => { return g.state == Guest.GuestState.WaitingToOrder; }).ToList();
 
+        if (waitingGuests.Count > 0)
+        {
+            var randomGuest = waitingGuests[Random.Range(0, waitingGuests.Count)];
+            if (randomGuest.CanOrder())
+            {
+                Debug.Log(randomGuest.name + " is ordering");
+                randomGuest.DecideOrder();
+            }
+            else
+            {
+                Debug.Log(randomGuest.name + " is not ready " + randomGuest.state);
+            }
+        }
     }
 }
