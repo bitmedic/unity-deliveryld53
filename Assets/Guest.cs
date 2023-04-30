@@ -14,6 +14,7 @@ public partial class Guest : MonoBehaviour
     [Header("References")]
     public GameObject actualOrderDisplay;
     public GameObject memorizedOrderDisplay;
+    public ParticleSystem moneyParticles;
 
     [Header("Debug")]
     public float nextOrder;
@@ -30,10 +31,14 @@ public partial class Guest : MonoBehaviour
         character = transform.Find("Character");
     }
 
+    private DrinkInHandView drinkInHandView;
+
     // Start is called before the first frame update
     void Start()
     {
         nextOrder = Time.time + Random.Range(orderDelayMin, orderDelayMax);
+
+        drinkInHandView = GetComponentInChildren<DrinkInHandView>();
     }
 
     // Update is called once per frame
@@ -43,14 +48,14 @@ public partial class Guest : MonoBehaviour
         if (memorizedOrder != null)
         {
             memorizedOrderDisplay.SetActive(true);
-            memorizedOrderDisplay.GetComponentsInChildren<SpriteRenderer>()[1].sprite = memorizedOrder.orderImage;
+            memorizedOrderDisplay.GetComponentsInChildren<SpriteRenderer>()[1].sprite = memorizedOrder.orderImageSide;
             actualOrderDisplay.SetActive(false);
         }
         else if (actualOrder != null)
         {
             memorizedOrderDisplay.SetActive(false);
             actualOrderDisplay.SetActive(true);
-            actualOrderDisplay.GetComponentsInChildren<SpriteRenderer>()[1].sprite = actualOrder.orderImage;
+            actualOrderDisplay.GetComponentsInChildren<SpriteRenderer>()[1].sprite = actualOrder.orderImageSide;
         }
         else
         {
@@ -79,6 +84,8 @@ public partial class Guest : MonoBehaviour
     {
         if (order == actualOrder)
         {
+            drinkInHandView.ShowDrink(actualOrder.enumDrink);
+            moneyParticles.Play();
             nextOrder = Time.time + Random.Range(orderDelayMin, orderDelayMax);
             actualOrder = null;
             memorizedOrder = null;
@@ -89,11 +96,13 @@ public partial class Guest : MonoBehaviour
             return false; // what else should happen in case the wrong order was memorized? 
         }
     }
-
+    
     public void DecideOrder()
     {
         if (!HasNewOrder())
         {
+            drinkInHandView.ShowDrink(EnumDrink.None); // clear previous drink in handw
+
             var possibleOrders = OrderAndDeliver.Instance.possibleOrders;
             actualOrder = possibleOrders[Random.Range(0, possibleOrders.Count)];
         }
