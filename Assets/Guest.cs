@@ -8,8 +8,8 @@ public partial class Guest : MonoBehaviour
 {
     [Header("Settings")]
     public float guestSpeed;
-    public float orderDelayMin = 15;
-    public float orderDelayMax = 60;
+    public float minOrderWaitTime = 15;
+    public float maxOrderWaitTime = 60;
 
     [Header("References")]
     public GameObject actualOrderDisplay;
@@ -28,6 +28,8 @@ public partial class Guest : MonoBehaviour
     private Transform character;
     private Seat seat;
     private CamTriggerZone barZone;
+    private Coroutine waitCoroutine;
+    private bool readyToOrder;
 
     private void Awake()
     {
@@ -36,6 +38,7 @@ public partial class Guest : MonoBehaviour
         obstacle = GetComponent<NavMeshObstacle>();
         character = transform.Find("Character");
         barZone = GameObject.FindAnyObjectByType<CamTriggerZone>();
+
     }
 
     private DrinkInHandView drinkInHandView;
@@ -43,8 +46,7 @@ public partial class Guest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        nextOrder = Time.time + Random.Range(orderDelayMin, orderDelayMax);
-
+        name = name + Time.time;
         drinkInHandView = GetComponentInChildren<DrinkInHandView>();
     }
 
@@ -83,13 +85,17 @@ public partial class Guest : MonoBehaviour
 
     public OrderType TakeOrder(DrunkPlayer player)
     {
+        if (waitCoroutine != null)
+        {
+            StopCoroutine(waitCoroutine); // they dont leave after taking the order
+        }
         memorizedOrder = actualOrder; // give a chance to misremember;
         return memorizedOrder;
     }
 
-    public bool HasNewOrder()
+    public bool IsReadyToOrder()
     {
-        return actualOrder != null && memorizedOrder == null;
+        return readyToOrder && actualOrder == null;
     }
 
     public bool Deliver(OrderType order)
@@ -98,7 +104,6 @@ public partial class Guest : MonoBehaviour
         {
             drinkInHandView.ShowDrink(actualOrder.enumDrink);
             moneyParticles.Play();
-            nextOrder = Time.time + Random.Range(orderDelayMin, orderDelayMax);
             actualOrder = null;
             memorizedOrder = null;
             return true;
@@ -111,13 +116,37 @@ public partial class Guest : MonoBehaviour
     
     public void DecideOrder()
     {
-        if (!HasNewOrder())
+        if (IsReadyToOrder())
         {
-            drinkInHandView.ShowDrink(EnumDrink.None); // clear previous drink in handw
+            drinkInHandView.ShowDrink(EnumDrink.None); // clear previous drink in hand
 
             var possibleOrders = OrderAndDeliver.Instance.possibleOrders;
             actualOrder = possibleOrders[Random.Range(0, possibleOrders.Count)];
+            
+            float waitTime = Random.Range(minOrderWaitTime, maxOrderWaitTime);
+            waitCoroutine = StartCoroutine(LeaveBarIn(waitTime));
         }
+    }
+
+    public IEnumerator LeaveBarIn(float seconds)
+    {
+        Debug.Log(name + " will leave in " + seconds + "seconds");
+        yield return new WaitForSeconds(seconds);
+        LeaveBar();
+    }
+
+    private void LeaveBar()
+    {
+        // TODO show how annoyed they are
+
+        Debug.Log(name + " is now leaving");
+        obstacle.enabled = false;
+        agent.enabled = true;
+        character.transform.localRotation = Quaternion.Euler(90, 0f, 0);
+        agent.destination = BarManager.Instance.LeaveBarLocation.position;
+        readyToOrder = false;
+        actualOrder = null;
+        seat.guest = null;
     }
 
     public void FindPlace()
@@ -150,8 +179,13 @@ public partial class Guest : MonoBehaviour
             transform.position = seat.transform.position;
             transform.rotation = seat.transform.rotation;
             character.transform.localRotation = Quaternion.identity;
-
-
+            readyToOrder = true;
+            Debug.Log(name + " is ready to order");
+        }
+        if (collision.CompareTag("Killzone"))
+        {
+            Debug.Log(name + ": Good Night!");
+            Destroy(gameObject);
         }
     }
 }

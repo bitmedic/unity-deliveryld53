@@ -1333,8 +1333,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guestSpeed: 1
-  orderDelayMin: 15
-  orderDelayMax: 30
+  minOrderWaitTime: 5
+  maxOrderWaitTime: 10
   actualOrderDisplay: {fileID: 3362964867887765067}
   memorizedOrderDisplay: {fileID: 1966719470120674215}
   moneyParticles: {fileID: 2678131655203471118}

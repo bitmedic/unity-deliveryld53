@@ -35,7 +35,7 @@ public class OrderAndDeliver : MonoBehaviour
         {
             Guest guest = collision.collider.GetComponent<Guest>();
 
-            if (((guest.HasNewOrder() && rememberedOrders.Count < 5 && carryingOrders.Count == 0))// somehow display full brain and not taking an order
+            if (((guest.IsReadyToOrder() && rememberedOrders.Count < 5 && carryingOrders.Count == 0))// somehow display full brain and not taking an order
                 || (guest.actualOrder != null && guest.memorizedOrder != null && !rememberedOrders.Contains(guest.memorizedOrder) && carryingOrders.Count == 0)) // retake order if already drunken 
             {
                 OrderType order = guest.TakeOrder(GetComponent<DrunkPlayer>());

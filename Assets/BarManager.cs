@@ -5,7 +5,7 @@ using UnityEngine;
 public class BarManager : MonoBehaviour
 {
     public static BarManager Instance { get; private set; }
-
+    public Transform LeaveBarLocation;
     private void Awake()
     {
         Instance = this;
@@ -28,8 +28,9 @@ public class BarManager : MonoBehaviour
         Guest[] guests = (Guest[])FindObjectsOfType(typeof(Guest));
 
         var randomGuest = guests[Random.Range(0, guests.Length)];
-        if (!randomGuest.HasNewOrder())
+        if (randomGuest.IsReadyToOrder())
         {
+            Debug.Log(randomGuest.name + " is ordering");
             randomGuest.DecideOrder();
         }
 
