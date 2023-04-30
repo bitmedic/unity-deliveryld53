@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Guest
   - DraftZone
+  - Seat
   layers:
   - Default
   - TransparentFX

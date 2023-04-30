@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject spawnedObject;
+    public Guest spawnedObject;
     public float spawnDelay;
 
     void Start()
@@ -20,6 +20,7 @@ public class Spawner : MonoBehaviour
 
     void DoSpawn()
     {
-        Instantiate(spawnedObject, transform.position, Quaternion.identity);
+        Guest guest = Instantiate(spawnedObject, transform.position, Quaternion.identity);
+        guest.FindPlace();
     }
 }
