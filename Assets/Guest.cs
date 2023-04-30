@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 public partial class Guest : MonoBehaviour
 {
@@ -19,12 +21,18 @@ public partial class Guest : MonoBehaviour
     public OrderType actualOrder;
     public OrderType memorizedOrder;
 
-    private Rigidbody2D rb;
+    private NavMeshAgent agent;
+    private Transform character;
+
+    private void Awake()
+    {
+        agent = GetComponent<NavMeshAgent>();
+        character = transform.Find("Character");
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
         nextOrder = Time.time + Random.Range(orderDelayMin, orderDelayMax);
     }
 
@@ -54,10 +62,6 @@ public partial class Guest : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (target != null)
-        {
-            rb.velocity = (target.position - transform.position).normalized * guestSpeed; // maybe slower by distance?
-        }
     }
 
     public OrderType TakeOrder(DrunkPlayer player)
@@ -93,5 +97,14 @@ public partial class Guest : MonoBehaviour
             var possibleOrders = OrderAndDeliver.Instance.possibleOrders;
             actualOrder = possibleOrders[Random.Range(0, possibleOrders.Count)];
         }
+    }
+
+    public void FindPlace()
+    {
+        var seats = GameObject.FindObjectsOfType<Seat>();
+        var emptySeats = seats.Where(s => { return s.guest == null; });
+        var seat = emptySeats.ToArray()[Random.Range(0, emptySeats.Count())];
+        character.transform.localRotation = Quaternion.Euler(90, 0, 0);
+        agent.SetDestination(seat.transform.position);
     }
 }
