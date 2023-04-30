@@ -25,7 +25,7 @@ public class PlayerArmTrayController : MonoBehaviour
 
             for (int i = 0; i < carriedItems.Count; i++)
             {
-                orderRenderers[i + 1].sprite = carriedItems[i].orderImage;
+                orderRenderers[i + 1].sprite = carriedItems[i].orderImageTop;
             }
         }
         else

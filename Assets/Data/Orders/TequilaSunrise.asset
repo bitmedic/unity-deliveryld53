@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a83584af9cd4f649b3c26113e3c50d9, type: 3}
   m_Name: TequilaSunrise
   m_EditorClassIdentifier: 
-  orderImage: {fileID: 21300000, guid: b071e69e1639efc4881ad20536ff745a, type: 3}
+  enumDrink: 2
+  orderImageSide: {fileID: 21300000, guid: 3537bc900a9d1f94d89e5b76dd0dcbc6, type: 3}
+  orderImageTop: {fileID: 21300000, guid: ca65d530725dfc043a713502254a4869, type: 3}

@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a83584af9cd4f649b3c26113e3c50d9, type: 3}
   m_Name: Whisky
   m_EditorClassIdentifier: 
-  orderImage: {fileID: 21300000, guid: cbb6e6da4005a0b448e98d1c6691a21c, type: 3}
+  enumDrink: 3
+  orderImageSide: {fileID: 21300000, guid: cbb6e6da4005a0b448e98d1c6691a21c, type: 3}
+  orderImageTop: {fileID: 21300000, guid: 0bccc2595a767c44087b1c1c2c333c50, type: 3}
