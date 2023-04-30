@@ -111,9 +111,24 @@ public partial class Guest : MonoBehaviour
     public void FindPlace()
     {
         var seats = GameObject.FindObjectsOfType<Seat>();
+
         var emptySeats = seats.Where(s => { return s.guest == null; });
+        if (emptySeats.Count() == 0)
+        {
+            Debug.Log("No more free seats.");
+            Destroy(this.gameObject);
+            return;
+        }
+
         var seat = emptySeats.ToArray()[Random.Range(0, emptySeats.Count())];
-        character.transform.localRotation = Quaternion.Euler(90, 0, 0);
+        
+        seat.guest = this; // reserve
         agent.SetDestination(seat.transform.position);
+        character.transform.localRotation = Quaternion.Euler(90, 0, 0);
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("TRIGGER " + collision.name);
     }
 }
