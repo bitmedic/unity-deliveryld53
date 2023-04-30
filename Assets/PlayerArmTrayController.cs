@@ -7,7 +7,7 @@ public class PlayerArmTrayController : MonoBehaviour
     // Start is called before the first frame update
     public Transform ArmRightEmpty;
     public Transform ArmRightTray;
-    public List<Guest.OrderType> carriedItems;
+    public List<OrderType> carriedItems;
 
     // Update is called once per frame
     void Update()

@@ -6,18 +6,25 @@ using UnityEngine;
 public class OrderAndDeliver : MonoBehaviour
 {
 
-    public List<Guest.OrderType> rememberedOrders;
+    public List<OrderType> rememberedOrders;
     public GameObject rememberedOrdersDisplay;
 
-    public List<Guest.OrderType> carryingOrders;
+    public List<OrderType> carryingOrders;
     public GameObject carryingOrdersDisplay;
 
     public GameObject draftTimerDisplay;
+    public List<OrderType> possibleOrders; 
 
-    // Start is called before the first frame update
+    public static OrderAndDeliver Instance { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     void Start()
     {
-        rememberedOrders = new List<Guest.OrderType>();
+        rememberedOrders = new List<OrderType>();
         GetComponent<PlayerArmTrayController>().carriedItems = carryingOrders;
     }
 
@@ -29,24 +36,29 @@ public class OrderAndDeliver : MonoBehaviour
 
             if (guest.HasNewOrder() && rememberedOrders.Count < 5 && carryingOrders.Count == 0) // somehow display full brain and not taking an order
             {
-                Guest.OrderType order = guest.TakeOrder(GetComponent<DrunkPlayer>());
+                OrderType order = guest.TakeOrder(GetComponent<DrunkPlayer>());
                 Debug.Log("Touched guest wants: " + guest.actualOrder + ". I will bring " + order);
                 rememberedOrders.Add(order);
                 if (rememberedOrders.Count > 0)
                 {
                     rememberedOrdersDisplay.SetActive(true);
                     var orderRenderers = rememberedOrdersDisplay.GetComponentsInChildren<SpriteRenderer>(true);
+
                     for (int i = 1; i < orderRenderers.Length; i++)
                     {
                         orderRenderers[i].gameObject.SetActive(i - 1 < rememberedOrders.Count);
-                        // TODO also update displayed order
+                    }
+
+                    for (int i = 0; i < rememberedOrders.Count; i++)
+                    {
+                        orderRenderers[i + 1].sprite = rememberedOrders[i].orderImage;
                     }
                 }
             }
 
             if (carryingOrders.Count > 0)
             {
-                if (guest.actualOrder != Guest.OrderType.None && guest.memorizedOrder != Guest.OrderType.None && carryingOrders.Contains(guest.memorizedOrder))
+                if (guest.actualOrder != null && guest.memorizedOrder != null && carryingOrders.Contains(guest.memorizedOrder))
                 {
                     carryingOrders.Remove(guest.memorizedOrder);
                     guest.Deliver(guest.memorizedOrder);
@@ -85,9 +97,6 @@ public class OrderAndDeliver : MonoBehaviour
         {
             carryingOrders.Add(order);
         }
-
-        // on extra
-        carryingOrders.Add(Guest.OrderType.Beer);
 
         rememberedOrders.Clear();
         rememberedOrdersDisplay.SetActive(false);

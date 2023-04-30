@@ -494,7 +494,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ArmRightEmpty: {fileID: 4647058746540631809}
   ArmRightTray: {fileID: 2034091113026085912}
-  carriedItems: 
+  carriedItems: []
 --- !u!114 &3873205452673294703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -507,11 +507,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff34452162c74f943963d35d3c6c4705, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rememberedOrders: 
+  rememberedOrders: []
   rememberedOrdersDisplay: {fileID: 3148244144866933526}
-  carryingOrders: 
+  carryingOrders: []
   carryingOrdersDisplay: {fileID: 1331692247067010509}
   draftTimerDisplay: {fileID: 0}
+  possibleOrders:
+  - {fileID: 11400000, guid: 38133482726429f46b280854ae742df0, type: 2}
+  - {fileID: 11400000, guid: d9cdf78ad257dcb4ca32cbff86f4dc29, type: 2}
+  - {fileID: 11400000, guid: d1638fedaab404840b8826b6bc2d4919, type: 2}
 --- !u!1 &2255697624649321227
 GameObject:
   m_ObjectHideFlags: 0
