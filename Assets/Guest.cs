@@ -14,14 +14,16 @@ public partial class Guest : MonoBehaviour
     [Header("References")]
     public GameObject actualOrderDisplay;
     public GameObject memorizedOrderDisplay;
+    public GameObject annoyedDisplay;
     public ParticleSystem moneyParticles;
     private Animator walkingAnimation;
 
     [Header("Debug")]
-    public float nextOrder;
-    public Transform target;
-    public OrderType actualOrder;
-    public OrderType memorizedOrder;
+    [SerializeField] private float nextOrder;
+    [SerializeField] private Transform target;
+    [SerializeField] internal OrderType actualOrder;
+    [SerializeField] internal OrderType memorizedOrder;
+    [SerializeField] internal GuestState state;
 
     private NavMeshAgent agent;
     private NavMeshObstacle obstacle;
@@ -31,6 +33,11 @@ public partial class Guest : MonoBehaviour
     private Coroutine waitCoroutine;
     private bool readyToOrder;
 
+    public enum GuestState
+    {
+        Entering, Waiting, Ordering, Drinking, Leaving
+    }
+
     private void Awake()
     {
         walkingAnimation = GetComponentInChildren<Animator>();
@@ -38,7 +45,8 @@ public partial class Guest : MonoBehaviour
         obstacle = GetComponent<NavMeshObstacle>();
         character = transform.Find("Character");
         barZone = GameObject.FindAnyObjectByType<CamTriggerZone>();
-
+        annoyedDisplay.SetActive(false);
+        state = GuestState.Entering;
     }
 
     private DrinkInHandView drinkInHandView;
@@ -76,7 +84,6 @@ public partial class Guest : MonoBehaviour
             memorizedOrderDisplay.SetActive(false);
             actualOrderDisplay.SetActive(false);
         }
-
     }
 
     private void FixedUpdate()
@@ -113,7 +120,7 @@ public partial class Guest : MonoBehaviour
             return false; // what else should happen in case the wrong order was memorized? 
         }
     }
-    
+
     public void DecideOrder()
     {
         if (IsReadyToOrder())
@@ -122,7 +129,8 @@ public partial class Guest : MonoBehaviour
 
             var possibleOrders = OrderAndDeliver.Instance.possibleOrders;
             actualOrder = possibleOrders[Random.Range(0, possibleOrders.Count)];
-            
+            state = GuestState.Ordering;
+
             float waitTime = Random.Range(minOrderWaitTime, maxOrderWaitTime);
             waitCoroutine = StartCoroutine(LeaveBarIn(waitTime));
         }
@@ -137,9 +145,9 @@ public partial class Guest : MonoBehaviour
 
     private void LeaveBar()
     {
-        // TODO show how annoyed they are
-
         Debug.Log(name + " is now leaving");
+        state = GuestState.Leaving;
+
         obstacle.enabled = false;
         agent.enabled = true;
         character.transform.localRotation = Quaternion.Euler(90, 0f, 0);
@@ -147,6 +155,8 @@ public partial class Guest : MonoBehaviour
         readyToOrder = false;
         actualOrder = null;
         seat.guest = null;
+
+        annoyedDisplay.SetActive(true);
     }
 
     public void FindPlace()
@@ -162,7 +172,7 @@ public partial class Guest : MonoBehaviour
         }
 
         seat = emptySeats.ToArray()[Random.Range(0, emptySeats.Count())];
-        
+
         seat.guest = this; // reserve
         agent.SetDestination(seat.transform.position);
         if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", true);
@@ -171,7 +181,7 @@ public partial class Guest : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject == seat.gameObject)
+        if (state == GuestState.Entering && collision.gameObject == seat.gameObject)
         {
             if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", false);
             agent.enabled = false;
@@ -181,8 +191,10 @@ public partial class Guest : MonoBehaviour
             character.transform.localRotation = Quaternion.identity;
             readyToOrder = true;
             Debug.Log(name + " is ready to order");
+            state = GuestState.Waiting;
         }
-        if (collision.CompareTag("Killzone"))
+
+        if (state == GuestState.Leaving && collision.CompareTag("Killzone"))
         {
             Debug.Log(name + ": Good Night!");
             Destroy(gameObject);

@@ -33,6 +33,10 @@ public class BarManager : MonoBehaviour
             Debug.Log(randomGuest.name + " is ordering");
             randomGuest.DecideOrder();
         }
+        else
+        {
+            Debug.Log(randomGuest.name + " is not ready " + randomGuest.state);
+        }
 
     }
 }
