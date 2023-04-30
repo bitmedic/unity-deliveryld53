@@ -204,7 +204,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7511529859961455568, guid: ec9f0891d7f96f74495e69c98b6442be, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.05
+      value: 8.17
       objectReference: {fileID: 0}
     - target: {fileID: 7511529859961455568, guid: ec9f0891d7f96f74495e69c98b6442be, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1216,7 +1216,7 @@ GameObject:
   m_Component:
   - component: {fileID: 579404272}
   m_Layer: 0
-  m_Name: LongTableH
+  m_Name: LongTable4H
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1761,7 +1761,7 @@ GameObject:
   m_Component:
   - component: {fileID: 868056937}
   m_Layer: 0
-  m_Name: SquareTable
+  m_Name: SquareTable2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2464,7 +2464,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1045170659}
   m_Layer: 0
-  m_Name: Barstools
+  m_Name: Barstools7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3699,7 +3699,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1378240046}
   m_Layer: 0
-  m_Name: LongTableV
+  m_Name: LongTable4V
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4934,7 +4934,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1956854017}
   m_Layer: 0
-  m_Name: SquareTableGroup
+  m_Name: SquareTableGroup6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
