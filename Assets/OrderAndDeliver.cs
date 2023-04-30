@@ -25,6 +25,7 @@ public class OrderAndDeliver : MonoBehaviour
     void Start()
     {
         rememberedOrders = new List<OrderType>();
+        rememberedOrdersDisplay.SetActive(false);
         GetComponent<PlayerArmTrayController>().carriedItems = carryingOrders;
     }
 
