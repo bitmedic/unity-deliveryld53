@@ -10,6 +10,7 @@ public partial class Guest : MonoBehaviour
     public float guestSpeed;
     public float minOrderWaitTime = 15;
     public float maxOrderWaitTime = 60;
+    public float chanceToOrderAnotherDrink = 50;
 
     [Header("References")]
     public GameObject actualOrderDisplay;
@@ -110,7 +111,7 @@ public partial class Guest : MonoBehaviour
         return state == GuestState.WaitingToOrder;
     }
 
-    public bool Deliver(OrderType order)
+    public void Deliver(OrderType order)
     {
         if (order == wantedOrder)
         {
@@ -121,19 +122,21 @@ public partial class Guest : MonoBehaviour
             state = GuestState.Drinking;
             float drinkTime = Random.Range(15, 45);
             StartCoroutine(FinishDrink(drinkTime));
-            return true;
-        }
-        else
-        {
-            return false; // what else should happen in case the wrong order was memorized? 
         }
     }
 
     private IEnumerator FinishDrink(float seconds)
     {
         yield return new WaitForSeconds(seconds);
-        state = GuestState.WaitingToOrder;
         drinkInHandView.ShowDrink(EnumDrink.None);
+        if (Random.Range(0, 100) <= chanceToOrderAnotherDrink)
+        {
+            state = GuestState.WaitingToOrder;
+        }
+        else
+        {
+            LeaveBar();
+        }
     }
 
     public void DecideOrder()
@@ -153,6 +156,7 @@ public partial class Guest : MonoBehaviour
     {
         Debug.Log(name + " will leave in " + seconds + "seconds");
         yield return new WaitForSeconds(seconds);
+        annoyedDisplay.SetActive(true);
         LeaveBar();
     }
 
@@ -167,8 +171,6 @@ public partial class Guest : MonoBehaviour
         agent.destination = BarManager.Instance.LeaveBarLocation.position;
         wantedOrder = null;
         seat.guest = null;
-
-        annoyedDisplay.SetActive(true);
     }
 
     public void FindPlace()
