@@ -27,6 +27,7 @@ public partial class Guest : MonoBehaviour
     private NavMeshObstacle obstacle;
     private Transform character;
     private Seat seat;
+    private CamTriggerZone barZone;
 
     private void Awake()
     {
@@ -34,6 +35,7 @@ public partial class Guest : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
         character = transform.Find("Character");
+        barZone = GameObject.FindAnyObjectByType<CamTriggerZone>();
     }
 
     private DrinkInHandView drinkInHandView;
@@ -54,13 +56,18 @@ public partial class Guest : MonoBehaviour
         {
             memorizedOrderDisplay.SetActive(true);
             memorizedOrderDisplay.GetComponentsInChildren<SpriteRenderer>()[1].sprite = memorizedOrder.orderImageSide;
+            memorizedOrderDisplay.transform.rotation = Quaternion.identity;
+            memorizedOrderDisplay.transform.localScale = Vector3.Lerp(memorizedOrderDisplay.transform.localScale, barZone.active ? 2 * Vector3.one : Vector3.one, .5f * Time.deltaTime);
             actualOrderDisplay.SetActive(false);
+
         }
         else if (actualOrder != null)
         {
             memorizedOrderDisplay.SetActive(false);
             actualOrderDisplay.SetActive(true);
             actualOrderDisplay.GetComponentsInChildren<SpriteRenderer>()[1].sprite = actualOrder.orderImageSide;
+            actualOrderDisplay.transform.rotation = Quaternion.identity;
+            actualOrderDisplay.transform.localScale = Vector3.Lerp(actualOrderDisplay.transform.localScale, barZone.active ? 2 * Vector3.one : Vector3.one, .5f * Time.deltaTime);
         }
         else
         {

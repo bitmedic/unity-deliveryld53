@@ -7,24 +7,26 @@ public class CamTriggerZone : MonoBehaviour
 {
 
     public CinemachineVirtualCamera InsideCamera;
+    public bool active;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Enter");
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("Enter2");
             InsideCamera.enabled = true;
+            active = true;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("Exit");
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("Exit2");
-            InsideCamera.enabled = false;
+            if (InsideCamera != null)
+            {
+                InsideCamera.enabled = false;
+                active = false;
+            }
         }
     }
 }

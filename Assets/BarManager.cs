@@ -26,7 +26,6 @@ public class BarManager : MonoBehaviour
     private void NewOrder()
     {
         Guest[] guests = (Guest[])FindObjectsOfType(typeof(Guest));
-        Debug.Log(guests.Length);
 
         var randomGuest = guests[Random.Range(0, guests.Length)];
         if (!randomGuest.HasNewOrder())
