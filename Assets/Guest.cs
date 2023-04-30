@@ -15,6 +15,7 @@ public partial class Guest : MonoBehaviour
     public GameObject actualOrderDisplay;
     public GameObject memorizedOrderDisplay;
     public ParticleSystem moneyParticles;
+    private Animator walkingAnimation;
 
     [Header("Debug")]
     public float nextOrder;
@@ -29,6 +30,7 @@ public partial class Guest : MonoBehaviour
 
     private void Awake()
     {
+        walkingAnimation = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
         character = transform.Find("Character");
@@ -127,6 +129,7 @@ public partial class Guest : MonoBehaviour
         
         seat.guest = this; // reserve
         agent.SetDestination(seat.transform.position);
+        if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", true);
         character.transform.localRotation = Quaternion.Euler(90, 0, 0);
     }
 
@@ -134,6 +137,7 @@ public partial class Guest : MonoBehaviour
     {
         if (collision.gameObject == seat.gameObject)
         {
+            if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", false);
             agent.enabled = false;
             obstacle.enabled = true;
             transform.position = seat.transform.position;
