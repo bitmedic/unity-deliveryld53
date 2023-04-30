@@ -63,4 +63,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   volume: {fileID: 3190435876557731517}
+  VignetteDefaultIntensity: 0.25
+  VignetteDefaultSmoothness: 0.35
   pegel: 0

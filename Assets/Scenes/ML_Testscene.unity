@@ -1046,6 +1046,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DrunkPostProcessing
       objectReference: {fileID: 0}
+    - target: {fileID: 7879133578693807960, guid: 62bccd9f59ee083498bdcc56c35e578a, type: 3}
+      propertyPath: pegel
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
