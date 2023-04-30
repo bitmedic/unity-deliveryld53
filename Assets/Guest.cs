@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Guest : MonoBehaviour
+public partial class Guest : MonoBehaviour
 {
     [Header("Settings")]
     public float guestSpeed;
@@ -21,11 +21,6 @@ public class Guest : MonoBehaviour
 
     private Rigidbody2D rb;
 
-    public enum OrderType
-    {
-        None, Beer, Whisky, Prosecco
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -36,21 +31,18 @@ public class Guest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (actualOrder == OrderType.None && Time.time > nextOrder)
-        {
-            nextOrder = float.MaxValue; // disable new order until fulfilled
-            actualOrder = OrderType.Beer; // random this
-        }
 
-        if (memorizedOrder != OrderType.None)
+        if (memorizedOrder != null)
         {
             memorizedOrderDisplay.SetActive(true);
+            memorizedOrderDisplay.GetComponentsInChildren<SpriteRenderer>()[1].sprite = memorizedOrder.orderImage;
             actualOrderDisplay.SetActive(false);
         }
-        else if (actualOrder != OrderType.None)
+        else if (actualOrder != null)
         {
             memorizedOrderDisplay.SetActive(false);
             actualOrderDisplay.SetActive(true);
+            actualOrderDisplay.GetComponentsInChildren<SpriteRenderer>()[1].sprite = actualOrder.orderImage;
         }
         else
         {
@@ -76,7 +68,7 @@ public class Guest : MonoBehaviour
 
     public bool HasNewOrder()
     {
-        return actualOrder != OrderType.None && memorizedOrder == OrderType.None;
+        return actualOrder != null && memorizedOrder == null;
     }
 
     public bool Deliver(OrderType order)
@@ -84,13 +76,22 @@ public class Guest : MonoBehaviour
         if (order == actualOrder)
         {
             nextOrder = Time.time + Random.Range(orderDelayMin, orderDelayMax);
-            actualOrder = Guest.OrderType.None;
-            memorizedOrder = Guest.OrderType.None;
+            actualOrder = null;
+            memorizedOrder = null;
             return true;
         }
         else
         {
             return false; // what else should happen in case the wrong order was memorized? 
+        }
+    }
+
+    public void DecideOrder()
+    {
+        if (!HasNewOrder())
+        {
+            var possibleOrders = OrderAndDeliver.Instance.possibleOrders;
+            actualOrder = possibleOrders[Random.Range(0, possibleOrders.Count)];
         }
     }
 }
