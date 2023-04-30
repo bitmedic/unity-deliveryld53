@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 6712369590729152018}
   - component: {fileID: 5593365818692273137}
   - component: {fileID: 2144695360838703416}
+  - component: {fileID: 6359948725096270191}
   m_Layer: 0
   m_Name: Armchair
-  m_TagString: Untagged
+  m_TagString: Seat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: e2eacb12a4df25b4bb915719f566c96b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -240,3 +241,16 @@ PolygonCollider2D:
       - {x: 2.385, y: -4.64}
       - {x: 2.5049999, y: -4.63}
   m_UseDelaunayMesh: 0
+--- !u!114 &6359948725096270191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6115511329218729367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79914c5ddb9768644a9dfd02cb8b0b50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guest: {fileID: 0}
