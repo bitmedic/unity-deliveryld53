@@ -12,6 +12,7 @@ public partial class Guest : MonoBehaviour
     [Header("References")]
     public GameObject actualOrderDisplay;
     public GameObject memorizedOrderDisplay;
+    public ParticleSystem moneyParticles;
 
     [Header("Debug")]
     public float nextOrder;
@@ -80,6 +81,7 @@ public partial class Guest : MonoBehaviour
         if (order == actualOrder)
         {
             drinkInHandView.ShowDrink(actualOrder.enumDrink);
+            moneyParticles.Play();
             nextOrder = Time.time + Random.Range(orderDelayMin, orderDelayMax);
             actualOrder = null;
             memorizedOrder = null;
