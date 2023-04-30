@@ -16,23 +16,29 @@ public class DrunkPlayer : MonoBehaviour
     private Animator walkingAnimation;
     private Transform character;
 
+    private bool controlsEnabled;
+
     void Awake()
     {
         Instance = this;
         walkingAnimation = GetComponentInChildren<Animator>();
         character = transform.Find("Character");
+        controlsEnabled = true;
     }
 
     void Update()
     {
         bool strafing = false; // don't rotate while moving
+        Vector3 input = Vector2.zero;
 
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            strafing = true;
+        if (controlsEnabled) { 
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                strafing = true;
+            }
+            input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         }
 
-        Vector3 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
         float offsetX = drunknessAmount * (Mathf.PerlinNoise1D(Time.time * drunknessSpeed) - 0.5f); // Mathf.Sin(Time.time * drunknessSpeed);
         float offsetY = drunknessAmount * (Mathf.PerlinNoise1D(Time.time * drunknessSpeed) - 0.5f); // Mathf.Sin(Time.time * drunknessSpeed);
@@ -67,4 +73,13 @@ public class DrunkPlayer : MonoBehaviour
         pegel = Mathf.Clamp01(pegel + amount);
     }
 
+    public void EnableControls(bool enable)
+    {
+        controlsEnabled = enable;
+    }
+
+    public void LookAt(Vector3 target)
+    {
+        UpdateRotation(Vector3.zero, target);
+    }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,8 @@ public class OrderAndDeliver : MonoBehaviour
 
     public List<Guest.OrderType> carryingOrders;
     public GameObject carryingOrdersDisplay;
+
+    public GameObject draftTimerDisplay;
 
     // Start is called before the first frame update
     void Start()
@@ -64,17 +67,49 @@ public class OrderAndDeliver : MonoBehaviour
         {
             if (carryingOrders.Count == 0 && rememberedOrders.Count > 0)
             {
-                foreach (var order in rememberedOrders)
-                {
-                    carryingOrders.Add(order);
-                }
-
-                // on extra
-                carryingOrders.Add(Guest.OrderType.Beer);
-
-                rememberedOrders.Clear();
-                rememberedOrdersDisplay.SetActive(false);
+                var player = DrunkPlayer.Instance;
+                player.transform.position = collision.transform.position;
+                player.LookAt(Vector2.down);
+                StartCoroutine(nameof(DraftDrinks));
             }
         }
+    }
+
+    private IEnumerator DraftDrinks()
+    {
+        DrunkPlayer.Instance.EnableControls(false);
+
+        yield return AnimateDraftTimer();
+
+        foreach (var order in rememberedOrders)
+        {
+            carryingOrders.Add(order);
+        }
+
+        // on extra
+        carryingOrders.Add(Guest.OrderType.Beer);
+
+        rememberedOrders.Clear();
+        rememberedOrdersDisplay.SetActive(false);
+
+        DrunkPlayer.Instance.EnableControls(true);
+    }
+
+    private IEnumerator AnimateDraftTimer()
+    {
+        draftTimerDisplay.SetActive(true);
+        float waitTime = 0;
+        float draftTime = 3f;
+        
+        SpriteRenderer renderer = draftTimerDisplay.GetComponent<SpriteRenderer>();
+        renderer.sharedMaterial.SetFloat("_Arc2", 360f);
+        
+        while (waitTime < draftTime)
+        {
+            yield return new WaitForSeconds(.1f);
+            waitTime += .1f;
+            renderer.sharedMaterial.SetFloat("_Arc2", 360f / draftTime * (draftTime - waitTime));
+        }
+        draftTimerDisplay.SetActive(false);
     }
 }
