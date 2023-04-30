@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a83584af9cd4f649b3c26113e3c50d9, type: 3}
   m_Name: Whisky
   m_EditorClassIdentifier: 
-  orderImage: {fileID: 21300000, guid: e7620c7d3e6bf19458955b2ba8684a31, type: 3}
+  orderImage: {fileID: 21300000, guid: cbb6e6da4005a0b448e98d1c6691a21c, type: 3}

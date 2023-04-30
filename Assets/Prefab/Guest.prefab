@@ -810,8 +810,8 @@ MonoBehaviour:
   memorizedOrderDisplay: {fileID: 1966719470120674215}
   nextOrder: 0
   target: {fileID: 0}
-  actualOrder: 0
-  memorizedOrder: 0
+  actualOrder: {fileID: 0}
+  memorizedOrder: {fileID: 0}
 --- !u!70 &2465288336515988726
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
