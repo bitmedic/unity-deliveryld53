@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Whisky
   m_EditorClassIdentifier: 
   enumDrink: 3
-  orderImageSide: {fileID: 21300000, guid: cbb6e6da4005a0b448e98d1c6691a21c, type: 3}
-  orderImageTop: {fileID: 21300000, guid: 0bccc2595a767c44087b1c1c2c333c50, type: 3}
+  orderImageSide: {fileID: 21300000, guid: 96c608260cb6a00418cdad4016f3aae4, type: 3}
+  orderImageTop: {fileID: 21300000, guid: 64f177fd2816d724694b690939be16cd, type: 3}
