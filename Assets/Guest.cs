@@ -23,11 +23,14 @@ public partial class Guest : MonoBehaviour
     public OrderType memorizedOrder;
 
     private NavMeshAgent agent;
+    private NavMeshObstacle obstacle;
     private Transform character;
+    private Seat seat;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        obstacle = GetComponent<NavMeshObstacle>();
         character = transform.Find("Character");
     }
 
@@ -120,7 +123,7 @@ public partial class Guest : MonoBehaviour
             return;
         }
 
-        var seat = emptySeats.ToArray()[Random.Range(0, emptySeats.Count())];
+        seat = emptySeats.ToArray()[Random.Range(0, emptySeats.Count())];
         
         seat.guest = this; // reserve
         agent.SetDestination(seat.transform.position);
@@ -129,6 +132,15 @@ public partial class Guest : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("TRIGGER " + collision.name);
+        if (collision.gameObject == seat.gameObject)
+        {
+            agent.enabled = false;
+            obstacle.enabled = true;
+            transform.position = seat.transform.position;
+            transform.rotation = seat.transform.rotation;
+            character.transform.localRotation = Quaternion.identity;
+
+
+        }
     }
 }
