@@ -1426,8 +1426,8 @@ MonoBehaviour:
   moneyParticles: {fileID: 2678131655203471118}
   nextOrder: 0
   target: {fileID: 0}
-  actualOrder: {fileID: 0}
-  memorizedOrder: {fileID: 0}
+  wantedOrder: {fileID: 0}
+  orderedOrder: {fileID: 0}
   state: 0
 --- !u!195 &751956195918650472
 NavMeshAgent:
@@ -7139,7 +7139,7 @@ GameObject:
   - component: {fileID: 7174636383799464363}
   - component: {fileID: 1922815761619423052}
   m_Layer: 0
-  m_Name: beer_top (1)
+  m_Name: whiskey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7152,14 +7152,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7401815602253502727}
-  m_LocalRotation: {x: 0, y: 0, z: -0.8801462, w: 0.47470284}
-  m_LocalPosition: {x: -0.595, y: 0.76699996, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.8477706, w: 0.5303632}
+  m_LocalPosition: {x: -0.726, y: 0.594, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3688788741868364523}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -123.32}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -115.94}
 --- !u!212 &1922815761619423052
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7201,7 +7201,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 46
-  m_Sprite: {fileID: 21300000, guid: 0bccc2595a767c44087b1c1c2c333c50, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b0baff58a2d16644ca38e161704ce512, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
