@@ -21,8 +21,8 @@ public partial class Guest : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private float nextOrder;
     [SerializeField] private Transform target;
-    [SerializeField] internal OrderType actualOrder;
-    [SerializeField] internal OrderType memorizedOrder;
+    [SerializeField] internal OrderType wantedOrder;
+    [SerializeField] internal OrderType orderedOrder;
     [SerializeField] internal GuestState state;
 
     private NavMeshAgent agent;
@@ -31,7 +31,6 @@ public partial class Guest : MonoBehaviour
     private Seat seat;
     private CamTriggerZone barZone;
     private Coroutine waitCoroutine;
-    private bool readyToOrder;
 
     public enum GuestState
     {
@@ -62,20 +61,20 @@ public partial class Guest : MonoBehaviour
     void Update()
     {
 
-        if (memorizedOrder != null)
+        if (orderedOrder != null)
         {
             memorizedOrderDisplay.SetActive(true);
-            memorizedOrderDisplay.GetComponentsInChildren<SpriteRenderer>()[1].sprite = memorizedOrder.orderImageSide;
+            memorizedOrderDisplay.GetComponentsInChildren<SpriteRenderer>()[1].sprite = orderedOrder.orderImageSide;
             memorizedOrderDisplay.transform.rotation = Quaternion.identity;
             memorizedOrderDisplay.transform.localScale = Vector3.Lerp(memorizedOrderDisplay.transform.localScale, barZone.active ? 2 * Vector3.one : Vector3.one, .5f * Time.deltaTime);
             actualOrderDisplay.SetActive(false);
 
         }
-        else if (actualOrder != null)
+        else if (wantedOrder != null)
         {
             memorizedOrderDisplay.SetActive(false);
             actualOrderDisplay.SetActive(true);
-            actualOrderDisplay.GetComponentsInChildren<SpriteRenderer>()[1].sprite = actualOrder.orderImageSide;
+            actualOrderDisplay.GetComponentsInChildren<SpriteRenderer>()[1].sprite = wantedOrder.orderImageSide;
             actualOrderDisplay.transform.rotation = Quaternion.identity;
             actualOrderDisplay.transform.localScale = Vector3.Lerp(actualOrderDisplay.transform.localScale, barZone.active ? 2 * Vector3.one : Vector3.one, .5f * Time.deltaTime);
         }
@@ -96,23 +95,31 @@ public partial class Guest : MonoBehaviour
         {
             StopCoroutine(waitCoroutine); // they dont leave after taking the order
         }
-        memorizedOrder = actualOrder; // give a chance to misremember;
-        return memorizedOrder;
+        orderedOrder = wantedOrder; // give a chance to misremember;
+        return orderedOrder;
     }
 
     public bool IsReadyToOrder()
     {
-        return readyToOrder && actualOrder == null;
+        return state == GuestState.Ordering;
+    }
+
+    public bool CanOrder()
+    {
+        return state == GuestState.Waiting;
     }
 
     public bool Deliver(OrderType order)
     {
-        if (order == actualOrder)
+        if (order == wantedOrder)
         {
-            drinkInHandView.ShowDrink(actualOrder.enumDrink);
+            drinkInHandView.ShowDrink(wantedOrder.enumDrink);
             moneyParticles.Play();
-            actualOrder = null;
-            memorizedOrder = null;
+            wantedOrder = null;
+            orderedOrder = null;
+            state = GuestState.Drinking;
+            float drinkTime = Random.Range(15, 45);
+            StartCoroutine(FinishDrink(drinkTime));
             return true;
         }
         else
@@ -121,14 +128,21 @@ public partial class Guest : MonoBehaviour
         }
     }
 
+    private IEnumerator FinishDrink(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        state = GuestState.Waiting;
+        drinkInHandView.ShowDrink(EnumDrink.None);
+    }
+
     public void DecideOrder()
     {
-        if (IsReadyToOrder())
+        if (state == GuestState.Waiting)
         {
             drinkInHandView.ShowDrink(EnumDrink.None); // clear previous drink in hand
 
             var possibleOrders = OrderAndDeliver.Instance.possibleOrders;
-            actualOrder = possibleOrders[Random.Range(0, possibleOrders.Count)];
+            wantedOrder = possibleOrders[Random.Range(0, possibleOrders.Count)];
             state = GuestState.Ordering;
 
             float waitTime = Random.Range(minOrderWaitTime, maxOrderWaitTime);
@@ -152,8 +166,7 @@ public partial class Guest : MonoBehaviour
         agent.enabled = true;
         character.transform.localRotation = Quaternion.Euler(90, 0f, 0);
         agent.destination = BarManager.Instance.LeaveBarLocation.position;
-        readyToOrder = false;
-        actualOrder = null;
+        wantedOrder = null;
         seat.guest = null;
 
         annoyedDisplay.SetActive(true);
@@ -189,7 +202,6 @@ public partial class Guest : MonoBehaviour
             transform.position = seat.transform.position;
             transform.rotation = seat.transform.rotation;
             character.transform.localRotation = Quaternion.identity;
-            readyToOrder = true;
             Debug.Log(name + " is ready to order");
             state = GuestState.Waiting;
         }

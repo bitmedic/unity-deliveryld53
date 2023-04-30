@@ -28,7 +28,7 @@ public class BarManager : MonoBehaviour
         Guest[] guests = (Guest[])FindObjectsOfType(typeof(Guest));
 
         var randomGuest = guests[Random.Range(0, guests.Length)];
-        if (randomGuest.IsReadyToOrder())
+        if (randomGuest.CanOrder())
         {
             Debug.Log(randomGuest.name + " is ordering");
             randomGuest.DecideOrder();

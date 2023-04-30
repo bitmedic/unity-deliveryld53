@@ -31,15 +31,17 @@ public class OrderAndDeliver : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log(name + " :: " + collision.collider.name);
+
         if (collision.collider.tag == "Guest")
         {
             Guest guest = collision.collider.GetComponent<Guest>();
 
             if (((guest.IsReadyToOrder() && rememberedOrders.Count < 5 && carryingOrders.Count == 0))// somehow display full brain and not taking an order
-                || (guest.actualOrder != null && guest.memorizedOrder != null && !rememberedOrders.Contains(guest.memorizedOrder) && carryingOrders.Count == 0)) // retake order if already drunken 
+                || (guest.wantedOrder != null && guest.orderedOrder != null && !rememberedOrders.Contains(guest.orderedOrder) && carryingOrders.Count == 0)) // retake order if already drunken 
             {
                 OrderType order = guest.TakeOrder(GetComponent<DrunkPlayer>());
-                Debug.Log("Touched guest wants: " + guest.actualOrder + ". I will bring " + order);
+                Debug.Log("Touched guest wants: " + guest.wantedOrder + ". I will bring " + order);
                 rememberedOrders.Add(order);
                 if (rememberedOrders.Count > 0)
                 {
@@ -60,16 +62,10 @@ public class OrderAndDeliver : MonoBehaviour
 
             if (carryingOrders.Count > 0)
             {
-                if (guest.actualOrder != null && guest.memorizedOrder != null && carryingOrders.Contains(guest.memorizedOrder))
+                if (guest.wantedOrder != null && guest.orderedOrder != null && carryingOrders.Contains(guest.orderedOrder))
                 {
-                    carryingOrders.Remove(guest.memorizedOrder);
-                    guest.Deliver(guest.memorizedOrder);
-                    if (carryingOrders.Count == 1)
-                    {
-                        Debug.Log("The last is for the waiter.");
-                        DrunkPlayer.Instance.GetDrunk(.1f);
-                        carryingOrders.Clear();
-                    }
+                    carryingOrders.Remove(guest.orderedOrder);
+                    guest.Deliver(guest.orderedOrder);
                 }
             }
         }
