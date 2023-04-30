@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class TutorialManager : MonoBehaviour
     public GameObject bar;
     public GameObject draftZone;
 
+    public Button backButton;
 
     // Update is called once per frame
     void Start()
@@ -37,6 +39,15 @@ public class TutorialManager : MonoBehaviour
 
     private void ShowTutorisalStep()
     {
+        if (tutorialStep == 0)
+        {
+            backButton.gameObject.SetActive(false);
+        }
+        else
+        {
+            backButton.gameObject.SetActive(true);
+        }
+
         player_step1.gameObject.SetActive(false);
         player_step2.gameObject.SetActive(false);
         customer.gameObject.SetActive(false);
