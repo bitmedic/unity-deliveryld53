@@ -22,6 +22,11 @@ public class PlayerArmTrayController : MonoBehaviour
             {
                 orderRenderers[i].gameObject.SetActive(i - 1 < carriedItems.Count);
             }
+
+            for (int i = 0; i < carriedItems.Count; i++)
+            {
+                orderRenderers[i + 1].sprite = carriedItems[i].orderImage;
+            }
         }
         else
         {

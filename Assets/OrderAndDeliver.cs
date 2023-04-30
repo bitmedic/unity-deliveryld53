@@ -91,10 +91,10 @@ public class OrderAndDeliver : MonoBehaviour
     {
         DrunkPlayer.Instance.EnableControls(false);
 
-        yield return AnimateDraftTimer();
 
         foreach (var order in rememberedOrders)
         {
+            yield return AnimateDraftTimer();
             carryingOrders.Add(order);
         }
 
@@ -108,16 +108,16 @@ public class OrderAndDeliver : MonoBehaviour
     {
         draftTimerDisplay.SetActive(true);
         float waitTime = 0;
-        float draftTime = 3f;
+        float draftTime = 1f;
         
         SpriteRenderer renderer = draftTimerDisplay.GetComponent<SpriteRenderer>();
-        renderer.sharedMaterial.SetFloat("_Arc2", 360f);
+        renderer.material.SetFloat("_Arc2", 360f);
         
         while (waitTime < draftTime)
         {
             yield return new WaitForSeconds(.1f);
             waitTime += .1f;
-            renderer.sharedMaterial.SetFloat("_Arc2", 360f / draftTime * (draftTime - waitTime));
+            renderer.material.SetFloat("_Arc2", 360f / draftTime * (draftTime - waitTime));
         }
         draftTimerDisplay.SetActive(false);
     }
