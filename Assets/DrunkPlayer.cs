@@ -13,9 +13,6 @@ public class DrunkPlayer : MonoBehaviour
     public float drunknessAmount; // how strong the extend of the sway is
     public float drunknessSpeed; // how much/fast the movement direction changes 
 
-    public bool moveInXZ;
-
-
     private Animator walkingAnimation;
     private Transform character;
 
@@ -64,11 +61,6 @@ public class DrunkPlayer : MonoBehaviour
             //UpdateRotation(transform, Vector3.zero, input);
             if (!strafing) UpdateRotation(Vector3.zero, swerveTarget);
             if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", true);
-        }
-
-        if (moveInXZ)
-        {
-            swerveTarget = new Vector3(swerveTarget.x, 0f, swerveTarget.y);
         }
 
         transform.position += swerveTarget * playerSpeed * Time.deltaTime;
