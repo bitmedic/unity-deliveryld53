@@ -5,7 +5,7 @@ using UnityEngine;
 public class DrunkPlayer : MonoBehaviour
 {
 
-    public float pegel = .5f;
+    public float pegel = 0f;
 
     public static DrunkPlayer Instance { get; private set; }
 
@@ -31,17 +31,6 @@ public class DrunkPlayer : MonoBehaviour
         {
             strafing = true;
         }
-
-        if (Input.GetKeyDown(KeyCode.KeypadPlus))
-        {
-            pegel += .01f;
-        }
-
-        if (Input.GetKeyDown(KeyCode.KeypadMinus))
-        {
-            pegel -= .05f;
-        }
-
 
         Vector3 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
@@ -71,6 +60,11 @@ public class DrunkPlayer : MonoBehaviour
         float angle = Mathf.Atan2(pos1.y - pos2.y, pos1.x - pos2.x) * 180 / Mathf.PI;
         angle += 90;
         character.localRotation = Quaternion.Euler(0, 0, angle);
+    }
+
+    public void GetDrunk(float amount)
+    {
+        pegel = Mathf.Clamp01(pegel + amount);
     }
 
 }

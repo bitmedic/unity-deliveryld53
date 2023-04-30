@@ -47,6 +47,12 @@ public class OrderAndDeliver : MonoBehaviour
                 {
                     carryingOrders.Remove(guest.memorizedOrder);
                     guest.Deliver(guest.memorizedOrder);
+                    if (carryingOrders.Count == 1)
+                    {
+                        Debug.Log("The last is for the waiter.");
+                        DrunkPlayer.Instance.GetDrunk(.1f);
+                        carryingOrders.Clear();
+                    }
                 }
             }
         }
@@ -63,9 +69,11 @@ public class OrderAndDeliver : MonoBehaviour
                     carryingOrders.Add(order);
                 }
 
+                // on extra
+                carryingOrders.Add(Guest.OrderType.Beer);
+
                 rememberedOrders.Clear();
                 rememberedOrdersDisplay.SetActive(false);
-
             }
         }
     }

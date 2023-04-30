@@ -2114,7 +2114,7 @@ GameObject:
   - component: {fileID: 2047657319}
   - component: {fileID: 2047657318}
   m_Layer: 5
-  m_Name: Image
+  m_Name: PegelAmount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2165,7 +2165,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.5
+  m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
