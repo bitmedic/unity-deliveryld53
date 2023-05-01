@@ -6,6 +6,7 @@ using UnityEngine.Rendering.Universal;
 
 public class DrunknessEffectController : MonoBehaviour
 {
+    public DrunkPlayer player;
     public Volume volume;
 
     public float VignetteDefaultIntensity;
@@ -35,6 +36,9 @@ public class DrunknessEffectController : MonoBehaviour
 
     private void Update()
     {
+        this.pegel = player.pegel;
+        timerToBlink = Random.Range(10, 30) * (1 / pegel);
+
         this.maxLensDist = (Mathf.Min(5, pegel) - 1) / 5;
 
         float sinValue = Mathf.Sin(Time.timeSinceLevelLoad);
