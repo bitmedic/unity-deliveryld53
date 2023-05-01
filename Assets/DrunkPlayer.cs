@@ -72,7 +72,19 @@ public class DrunkPlayer : MonoBehaviour
 
         if (input.magnitude == 0) // only if player not moves at all
         {
-            swerveTarget *= 0.1f; // swaying in place
+            if (pegel <= 0.6f)
+            {
+                swerveTarget *= 0.01f; // swaying in place
+            }
+            else if (pegel <= 1.2f)
+            {
+                swerveTarget *= 0.05f; // swaying in place
+            }
+            else
+            {
+                swerveTarget *= 0.1f; // swaying in place
+            }
+
             isWalking = false;
             if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", false);
         }
