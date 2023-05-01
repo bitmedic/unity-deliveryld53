@@ -25,10 +25,8 @@ public class BackgroundMusicEffect : MonoBehaviour
 
         float pct = Mathf.InverseLerp(0, 2f, pegel);
 
-        
         source.pitch = Mathf.SmoothDamp(source.pitch, Mathf.Lerp(1, 2, pct), ref v1, smoothTime);
-        source.volume = Mathf.SmoothDamp(source.volume, Mathf.Lerp(.2f, .01f, pct), ref v2, smoothTime);
+        source.volume = Mathf.SmoothDamp(source.volume, Mathf.Lerp(.01f, .002f, pct), ref v2, smoothTime);
         distortion.distortionLevel = Mathf.SmoothDamp(distortion.distortionLevel, Mathf.Lerp(.5f, .95f, pct), ref v3, smoothTime);
-
     }
 }
