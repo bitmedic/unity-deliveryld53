@@ -6,17 +6,19 @@ using UnityEngine.Rendering.Universal;
 
 public class DrunknessEffectController : MonoBehaviour
 {
+    public DrunkPlayer player;
     public Volume volume;
 
     public float VignetteDefaultIntensity;
     public float VignetteDefaultSmoothness;
+    public float MaxLensDistortion;
 
     private LensDistortion lensDistortion = null;
     private Vignette vignette = null;
 
 
     public float pegel;
-    float maxLensDist;
+    float lensDist;
 
     float timerToBlink;
 
@@ -35,11 +37,29 @@ public class DrunknessEffectController : MonoBehaviour
 
     private void Update()
     {
-        this.maxLensDist = (Mathf.Min(5, pegel) - 1) / 5;
+        if (this.pegel != player.pegel)
+        {
+            timerToBlink = Random.Range(10, 30) * (1 / pegel);
+        }
+
+        this.pegel = player.pegel;
+
+        if (pegel <= 0.3f)
+        {
+            this.lensDist = 0;
+        }
+        if (pegel <= 1)
+        {
+            this.lensDist = (pegel / 2.5f) * MaxLensDistortion;
+        }
+        else
+        {
+            this.lensDist = (Mathf.Min(2, pegel)/2) * MaxLensDistortion;
+        }
 
         float sinValue = Mathf.Sin(Time.timeSinceLevelLoad);
         float lerpValue = Mathf.InverseLerp(-1, 1, sinValue);
-        float lensDistortionValue = Mathf.Lerp(-1, 1, lerpValue) * maxLensDist;
+        float lensDistortionValue = Mathf.Lerp(-1, 1, lerpValue) * lensDist;
                 
         lensDistortion.intensity.value = lensDistortionValue;
 
