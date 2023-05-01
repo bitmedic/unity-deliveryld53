@@ -9,6 +9,9 @@ public class Spawner : MonoBehaviour
 
     void Start()
     {
+        SpawnGuest();
+        SpawnGuest();
+        SpawnGuest();
         StartCoroutine(DoSpawn());
     }
 
@@ -23,20 +26,25 @@ public class Spawner : MonoBehaviour
         yield return new WaitForSeconds(minSpawnDelay);
         while (!BarManager.Instance.lastCall) // no spawns after last call
         {
-            Guest guest = Instantiate(spawnedObject, transform.position, Quaternion.identity);
-            Seat[] linkedFreeSeats = guest.FindPlace(null);
-            if (linkedFreeSeats != null)
-            {
-                Debug.Log("linked free seats: " + linkedFreeSeats);
-                foreach(var s in linkedFreeSeats)
-                {
-                    Guest g = Instantiate(spawnedObject, transform.position, Quaternion.identity);
-                    g.FindPlace(s);
-                }
-            }
+            SpawnGuest();
             float delay = minSpawnDelay / BarManager.Instance.GetCurrentSpawnRate();
             Debug.Log("Next guest in " + delay + " seconds.");
             yield return new WaitForSeconds(delay);
+        }
+    }
+
+    private void SpawnGuest()
+    {
+        Guest guest = Instantiate(spawnedObject, transform.position, Quaternion.identity);
+        Seat[] linkedFreeSeats = guest.FindPlace(null);
+        if (linkedFreeSeats != null)
+        {
+            Debug.Log("linked free seats: " + linkedFreeSeats);
+            foreach (var s in linkedFreeSeats)
+            {
+                Guest g = Instantiate(spawnedObject, transform.position, Quaternion.identity);
+                g.FindPlace(s);
+            }
         }
     }
 }
