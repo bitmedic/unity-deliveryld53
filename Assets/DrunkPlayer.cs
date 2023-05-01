@@ -43,7 +43,6 @@ public class DrunkPlayer : MonoBehaviour
                 if (orders.StealRandomDrink())
                 {
                     pegel += .1f;
-                    playerSpeed = playerSpeedBase * (1 + pegel) * playerSpeedPegelMulti;
                 }
             }
 
@@ -54,7 +53,7 @@ public class DrunkPlayer : MonoBehaviour
             input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         }
 
-
+        playerSpeed = playerSpeedBase + pegel * playerSpeedPegelMulti * playerSpeedBase;
         float offsetX = drunknessAmount * (Mathf.PerlinNoise1D(Time.time * drunknessSpeed) - 0.5f); // Mathf.Sin(Time.time * drunknessSpeed);
         float offsetY = drunknessAmount * (Mathf.PerlinNoise1D(Time.time * drunknessSpeed) - 0.5f); // Mathf.Sin(Time.time * drunknessSpeed);
         Vector3 swerveTarget = input + new Vector3(offsetX, offsetY, 0) * pegel; // input + offset
