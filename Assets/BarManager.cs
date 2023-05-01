@@ -15,6 +15,7 @@ public class BarManager : MonoBehaviour
     public bool lastCall;
     public bool closingBar;
     public AnimationCurve guestSpawnOverTime;
+    public int money;
 
     private void Awake()
     {

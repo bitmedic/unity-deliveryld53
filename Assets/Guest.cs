@@ -124,6 +124,7 @@ public partial class Guest : MonoBehaviour
         {
             drinkInHandView.ShowDrink(wantedOrder.enumDrink);
             moneyParticles.Play();
+            BarManager.Instance.money += Random.Range(5, 10);
             wantedOrder = null;
             orderedOrder = null;
             state = GuestState.Drinking;
@@ -174,7 +175,6 @@ public partial class Guest : MonoBehaviour
     {
         Debug.Log(name + " will leave in " + seconds + "seconds");
         yield return new WaitForSeconds(seconds);
-        annoyedDisplay.SetActive(true);
         LeaveBar();
     }
 
