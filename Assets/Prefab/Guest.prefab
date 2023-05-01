@@ -1569,8 +1569,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guestSpeed: 1
-  minOrderWaitTime: 30
-  maxOrderWaitTime: 60
+  minWaitTimeAfterOrder: 20
+  maxWaitTimeAfterOrder: 45
+  minWaitTimeBeforeOrder: 10
+  maxWaitTimeBeforeOrder: 30
   chanceToOrderAnotherDrink: 50
   actualOrderDisplay: {fileID: 3362964867887765067}
   memorizedOrderDisplay: {fileID: 1966719470120674215}

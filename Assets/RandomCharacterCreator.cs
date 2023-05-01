@@ -56,7 +56,7 @@ public class RandomCharacterCreator : MonoBehaviour
 
         if (randomHair == spritesHead_Hairs.Count - 1)
         {
-            spriteHead_Hair.color = new Color(236 / 256, 35 / 256, 153 / 256);
+            spriteHead_Hair.color = new Color(236, 35, 153);
         }
         else
         {
