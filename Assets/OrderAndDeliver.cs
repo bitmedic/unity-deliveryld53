@@ -13,8 +13,9 @@ public class OrderAndDeliver : MonoBehaviour
 
     public GameObject draftTimerDisplay;
     public BeerDraftAnimationController beerDraftAnimationController;
-    public List<OrderType> possibleOrders; 
+    public List<OrderType> possibleOrders;
 
+    private TippingAudioController tippingAudio;
     public static OrderAndDeliver Instance { get; private set; }
 
     private void Awake()
@@ -28,6 +29,7 @@ public class OrderAndDeliver : MonoBehaviour
         rememberedOrdersDisplay.SetActive(false);
         draftTimerDisplay.SetActive(false);
         GetComponent<PlayerArmTrayController>().carriedItems = carryingOrders;
+        tippingAudio = GetComponentInChildren<TippingAudioController>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -64,6 +66,7 @@ public class OrderAndDeliver : MonoBehaviour
                 {
                     carryingOrders.Remove(guest.orderedOrder);
                     guest.Deliver(guest.orderedOrder);
+                    tippingAudio.PlayRandomSound();
                 }
             }
         }
