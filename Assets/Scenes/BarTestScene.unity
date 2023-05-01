@@ -1708,6 +1708,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 63217964}
+    - target: {fileID: 7879133578693807960, guid: 62bccd9f59ee083498bdcc56c35e578a, type: 3}
+      propertyPath: MaxLensDistortion
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
