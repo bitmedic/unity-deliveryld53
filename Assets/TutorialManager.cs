@@ -17,7 +17,8 @@ public class TutorialManager : MonoBehaviour
 
     private Animator animator;
 
-    private float timer = 10;
+    private float timer = 20;
+    private float defaultPageTime = 7.5f;
 
     // Update is called once per frame
     void Start()
@@ -31,7 +32,7 @@ public class TutorialManager : MonoBehaviour
         if (timer <= 0)
         {
             NextStep();
-            timer = 5;
+            timer = defaultPageTime;
         }
 
         timer -= Time.deltaTime;
@@ -60,7 +61,7 @@ public class TutorialManager : MonoBehaviour
 
     public void SetTutorialText()
     {
-        textTutorialStep.text = tutiorialSteps[tutorialStep].tutorialStpeText;
+        textTutorialStep.text = tutiorialSteps[tutorialStep].tutorialStpeText.Replace("\\n", "\n");
     }
 
     public void NextStep()
@@ -70,7 +71,7 @@ public class TutorialManager : MonoBehaviour
         {
             tutorialStep = 0;
         }
-        timer = 5;
+        timer = defaultPageTime;
         ShowTutorisalStep();
     }
 
@@ -81,7 +82,7 @@ public class TutorialManager : MonoBehaviour
         {
             tutorialStep = tutiorialSteps.Count - 1;
         }
-        timer = 5;
+        timer = defaultPageTime;
         ShowTutorisalStep();
     }
 

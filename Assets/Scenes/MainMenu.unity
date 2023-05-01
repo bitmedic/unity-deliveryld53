@@ -1362,7 +1362,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'start De-Liver-Y
+  m_text: 'start De-Liver
 
 '
   m_isRightToLeft: 0
@@ -2173,8 +2173,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Oh! If you ever feel thirst, hit SPACE - or one of those buttons on your
-    controller - to taste one of those drinks for your customers
+  m_text: \nd
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e5c169331111da438f3e5b5e7a7dc09, type: 2}
   m_sharedMaterial: {fileID: 853536267681231315, guid: 2e5c169331111da438f3e5b5e7a7dc09, type: 2}
@@ -2201,7 +2200,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.65
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2783,6 +2782,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0b6ef681c7f33e442b5706bd2c014323, type: 2}
   - {fileID: 11400000, guid: a4c98e1974991b245a901035e103bef3, type: 2}
   - {fileID: 11400000, guid: 696f29b298b4bcb40b5e43182234aaec, type: 2}
+  - {fileID: 11400000, guid: c2a04210a3ea41442b99d259f5c84eb1, type: 2}
   textTutorialStep: {fileID: 1321104721}
   backButton: {fileID: 1135152081}
 --- !u!114 &1778588691
