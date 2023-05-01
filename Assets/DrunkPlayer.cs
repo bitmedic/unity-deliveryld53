@@ -24,6 +24,7 @@ public class DrunkPlayer : MonoBehaviour
     private Transform character;
     private OrderAndDeliver orders;
     private StepsAudioController walkingAudio;
+    public SpriteRenderer starRing;
 
     private bool controlsEnabled;
     private bool isWalking;
@@ -112,6 +113,10 @@ public class DrunkPlayer : MonoBehaviour
         timerSound -= Time.deltaTime;
 
         walkingAudio.isWalking = isWalking;
+
+        starRing.color = new Color(1f, 1f, 1f, pegel);
+        starRing.GetComponent<Animator>().speed = pegel;
+        starRing.transform.localScale = Vector3.one * pegel;
     }
     
 
