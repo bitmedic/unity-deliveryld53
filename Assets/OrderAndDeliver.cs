@@ -112,7 +112,7 @@ public class OrderAndDeliver : MonoBehaviour
             carryingOrders.Add(order);
         }
         yield return AnimateDraftTimer();
-        DrunkPlayer.Instance.pegel += Random.Range(.1f, .2f);
+        DrunkPlayer.Instance.pegel += Random.Range(.15f, .25f);
 
         rememberedOrders.Clear();
         rememberedOrdersDisplay.SetActive(false);
