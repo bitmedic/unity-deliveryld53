@@ -16,6 +16,8 @@ public class BarManager : MonoBehaviour
     public bool closingBar;
     public AnimationCurve guestSpawnOverTime;
     public int money;
+    public Cinemachine.CinemachineVirtualCamera fullBarVCam;
+    public Canvas gameOverScreen;
 
     private void Awake()
     {
@@ -49,6 +51,10 @@ public class BarManager : MonoBehaviour
             Debug.Log("Bar closing now");
             closingBar = true;
             enabled = false;
+            DrunkPlayer.Instance.EnableControls(false);
+            fullBarVCam.enabled = true;
+            gameOverScreen.gameObject.SetActive(true);
+
             CancelInvoke();
 
             foreach (var guest in FindGuests())
