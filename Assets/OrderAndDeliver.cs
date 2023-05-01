@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -109,6 +108,8 @@ public class OrderAndDeliver : MonoBehaviour
             yield return AnimateDraftTimer();
             carryingOrders.Add(order);
         }
+        yield return AnimateDraftTimer();
+        DrunkPlayer.Instance.pegel += Random.Range(.1f, .2f);
 
         rememberedOrders.Clear();
         rememberedOrdersDisplay.SetActive(false);
