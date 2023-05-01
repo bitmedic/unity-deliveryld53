@@ -9,6 +9,7 @@ public class UiManager : MonoBehaviour
 
     public Image pegelBar;
     public Slider timeDisplay;
+    public Slider bierSlider;
     public TMPro.TextMeshProUGUI moneyText;
 
     // Start is called before the first frame update
@@ -22,6 +23,7 @@ public class UiManager : MonoBehaviour
     {
         pegelBar.fillAmount = sourcePlayer.pegel;
         timeDisplay.value = BarManager.Instance.GetTimePercentage();
+        bierSlider.value = sourcePlayer.pegel;
         moneyText.text = BarManager.Instance.money.ToString();
     }
 }
