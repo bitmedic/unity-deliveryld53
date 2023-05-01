@@ -13,6 +13,7 @@ public class OrderAndDeliver : MonoBehaviour
     public GameObject carryingOrdersDisplay;
 
     public GameObject draftTimerDisplay;
+    public BeerDraftAnimationController beerDraftAnimationController;
     public List<OrderType> possibleOrders; 
 
     public static OrderAndDeliver Instance { get; private set; }
@@ -103,7 +104,8 @@ public class OrderAndDeliver : MonoBehaviour
 
     private IEnumerator AnimateDraftTimer()
     {
-        draftTimerDisplay.SetActive(true);
+        draftTimerDisplay.SetActive(false);
+        beerDraftAnimationController.Visible(true);
         float waitTime = 0;
         float draftTime = 1f;
         
@@ -115,7 +117,10 @@ public class OrderAndDeliver : MonoBehaviour
             yield return new WaitForSeconds(.1f);
             waitTime += .1f;
             renderer.material.SetFloat("_Arc2", 360f / draftTime * (draftTime - waitTime));
+
+            beerDraftAnimationController.SetPercentage((100 * waitTime) / draftTime);
         }
         draftTimerDisplay.SetActive(false);
+        beerDraftAnimationController.Visible(false);
     }
 }
