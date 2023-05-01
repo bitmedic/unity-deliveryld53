@@ -3728,7 +3728,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnedObject: {fileID: 9002894248315532661, guid: b97760d95088e264bb56570e3cb17654, type: 3}
-  minSpawnDelay: 10
+  minSpawnDelay: 5
 --- !u!1001 &1078308895
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4666,6 +4666,7 @@ MonoBehaviour:
   lastCallTime: 300
   barOpenSince: 0
   lastCall: 0
+  closingBar: 0
   guestSpawnOverTime:
     serializedVersion: 2
     m_Curve:
@@ -7900,10 +7901,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 3268719917505528286, guid: 153e889cfd2a4b84bb0730291e849ed3, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3743361183830726971, guid: 153e889cfd2a4b84bb0730291e849ed3, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 3743361183830726971, guid: 153e889cfd2a4b84bb0730291e849ed3, type: 3}
+      propertyPath: m_PlaneDistance
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4647475116712997788, guid: 153e889cfd2a4b84bb0730291e849ed3, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -17.100002

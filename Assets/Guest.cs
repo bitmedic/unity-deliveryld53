@@ -8,8 +8,10 @@ public partial class Guest : MonoBehaviour
 {
     [Header("Settings")]
     public float guestSpeed;
-    public float minOrderWaitTime = 15;
-    public float maxOrderWaitTime = 60;
+    public float minWaitTimeAfterOrder = 20;
+    public float maxWaitTimeAfterOrder = 45;
+    public float minWaitTimeBeforeOrder = 10;
+    public float maxWaitTimeBeforeOrder = 30;
     public float chanceToOrderAnotherDrink = 50;
 
     [Header("References")]
@@ -134,9 +136,11 @@ public partial class Guest : MonoBehaviour
     {
         yield return new WaitForSeconds(seconds);
         drinkInHandView.ShowDrink(EnumDrink.None);
-        if (Random.Range(0, 100) <= chanceToOrderAnotherDrink)
+
+        if (Random.Range(0, 100) <= chanceToOrderAnotherDrink && ! BarManager.Instance.lastCall)
         {
             state = GuestState.WaitingToOrder;
+            StartCoroutine(OrderDrinkIn(Random.Range(minWaitTimeBeforeOrder, maxWaitTimeBeforeOrder)));
         }
         else
         {
@@ -146,7 +150,7 @@ public partial class Guest : MonoBehaviour
 
     public void DecideOrder()
     {
-        if (state == GuestState.WaitingToOrder)
+        if (state == GuestState.WaitingToOrder || state == GuestState.Entering && BarManager.Instance.lastCall)
         {
             Debug.Log(name + " is ordering");
 
@@ -154,9 +158,16 @@ public partial class Guest : MonoBehaviour
             wantedOrder = possibleOrders[Random.Range(0, possibleOrders.Count)];
             state = GuestState.Ordering;
 
-            float waitTime = Random.Range(minOrderWaitTime, maxOrderWaitTime);
+            float waitTime = Random.Range(minWaitTimeAfterOrder, maxWaitTimeAfterOrder);
             waitCoroutine = StartCoroutine(LeaveBarIn(waitTime));
         }
+    }
+
+    public IEnumerator OrderDrinkIn(float seconds)
+    {
+        Debug.Log(name + " will order in " + seconds + "seconds");
+        yield return new WaitForSeconds(seconds);
+        DecideOrder();
     }
 
     public IEnumerator LeaveBarIn(float seconds)
@@ -169,7 +180,7 @@ public partial class Guest : MonoBehaviour
 
     private void LeaveBar()
     {
-        if (BarManager.Instance.lastCall)
+        if (!BarManager.Instance.closingBar && BarManager.Instance.lastCall)
         {
             return; // do not leave during last call
         }
@@ -216,6 +227,7 @@ public partial class Guest : MonoBehaviour
             character.transform.localRotation = Quaternion.identity;
             Debug.Log(name + " is ready to order");
             state = GuestState.WaitingToOrder;
+            StartCoroutine(OrderDrinkIn(Random.Range(minWaitTimeBeforeOrder, maxWaitTimeBeforeOrder)));
         }
 
         if (state == GuestState.Leaving && collision.CompareTag("Killzone"))

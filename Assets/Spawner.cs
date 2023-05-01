@@ -21,7 +21,7 @@ public class Spawner : MonoBehaviour
     {
         Debug.Log("Waiting " + minSpawnDelay + " seconds for first guest");
         yield return new WaitForSeconds(minSpawnDelay);
-        while (true)
+        while (!BarManager.Instance.lastCall) // no spawns after last call
         {
             Guest guest = Instantiate(spawnedObject, transform.position, Quaternion.identity);
             guest.FindPlace();
