@@ -14,7 +14,7 @@ public class StepsAudioController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        source = GetComponent<AudioSource>();
+        source = GetComponentInChildren<AudioSource>();
     }
 
     // Update is called once per frame
