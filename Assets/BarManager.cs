@@ -13,6 +13,7 @@ public class BarManager : MonoBehaviour
     public float barOpenSince;
     private float barOpenAt;
     public bool lastCall;
+    public bool closingBar;
     public AnimationCurve guestSpawnOverTime;
 
     private void Awake()
@@ -23,7 +24,6 @@ public class BarManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating(nameof(NewOrder), 5f, 10f);
         barOpenAt = Time.time;
     }
 
@@ -36,7 +36,7 @@ public class BarManager : MonoBehaviour
         if (!lastCall && barOpenSince > lastCallTime)
         {
             lastCall = true;
-            var waitingGuests = FindWaitingGuests();
+            var waitingGuests = FindGuests();
             foreach (var guest in waitingGuests)
             {
                 guest.DecideOrder();
@@ -46,7 +46,8 @@ public class BarManager : MonoBehaviour
         if (barOpenSince > barCloseTime)
         {
             Debug.Log("Bar closing now");
-            this.enabled = false;
+            closingBar = true;
+            enabled = false;
             CancelInvoke();
 
             foreach (var guest in FindGuests())
@@ -70,17 +71,6 @@ public class BarManager : MonoBehaviour
     {
         Guest[] guests = (Guest[])FindObjectsOfType(typeof(Guest));
         return guests.ToList();
-    }
-
-    private void NewOrder()
-    {
-        var waitingGuests = FindWaitingGuests();
-
-        if (waitingGuests.Count > 0)
-        {
-            var randomGuest = waitingGuests[Random.Range(0, waitingGuests.Count)];
-            randomGuest.DecideOrder();
-        }
     }
 
     public Guest FindGuestWithOpenOrder()
