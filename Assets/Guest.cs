@@ -175,7 +175,6 @@ public partial class Guest : MonoBehaviour
     {
         Debug.Log(name + " will leave in " + seconds + "seconds");
         yield return new WaitForSeconds(seconds);
-        annoyedDisplay.SetActive(true);
         LeaveBar();
     }
 
