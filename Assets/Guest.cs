@@ -9,10 +9,12 @@ public partial class Guest : MonoBehaviour
     [Header("Settings")]
     public float guestSpeed;
     public float minWaitTimeAfterOrder = 20;
-    public float maxWaitTimeAfterOrder = 45;
-    public float minWaitTimeBeforeOrder = 10;
-    public float maxWaitTimeBeforeOrder = 30;
-    public float chanceToOrderAnotherDrink = 50;
+    public float maxWaitTimeAfterOrder = 30;
+    public float minWaitTimeBeforeOrder = 5;
+    public float maxWaitTimeBeforeOrder = 15;
+    public float minDrinkTime = 15;
+    public float maxDrinkTime = 45;
+    public float chanceToOrderAnotherDrink = 75;
 
     [Header("References")]
     public GameObject actualOrderDisplay;
@@ -88,13 +90,10 @@ public partial class Guest : MonoBehaviour
             memorizedOrderDisplay.SetActive(false);
             actualOrderDisplay.SetActive(false);
         }
-
-        if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", state == GuestState.Entering || state == GuestState.Leaving);
-        walkingAudio.isWalking = state == GuestState.Entering || state == GuestState.Leaving;
-    }
-
-    private void FixedUpdate()
-    {
+        
+        bool isWalking = (state == GuestState.Entering || state == GuestState.Leaving);
+        if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", isWalking);
+        walkingAudio.isWalking = isWalking;
     }
 
     public OrderType TakeOrder(DrunkPlayer player)
@@ -128,7 +127,7 @@ public partial class Guest : MonoBehaviour
             wantedOrder = null;
             orderedOrder = null;
             state = GuestState.Drinking;
-            float drinkTime = Random.Range(15, 45);
+            float drinkTime = Random.Range(minDrinkTime, maxDrinkTime);
             StartCoroutine(FinishDrink(drinkTime));
         }
     }
@@ -197,23 +196,39 @@ public partial class Guest : MonoBehaviour
         seat.guest = null;
     }
 
-    public void FindPlace()
+    public Seat[] FindPlace(Seat preferredSeat)
     {
-        var seats = GameObject.FindObjectsOfType<Seat>();
-
-        var emptySeats = seats.Where(s => { return s.guest == null; });
-        if (emptySeats.Count() == 0)
+        if (preferredSeat != null && preferredSeat.guest == null)
         {
-            Debug.Log("No more free seats.");
-            Destroy(this.gameObject);
-            return;
+            seat = preferredSeat;
+        }
+        else
+        {
+            var seats = GameObject.FindObjectsOfType<Seat>();
+
+            var emptySeats = seats.Where(s => { return s.guest == null; });
+            if (emptySeats.Count() == 0)
+            {
+                Debug.Log("No more free seats.");
+                Destroy(this.gameObject);
+                return null;
+            }
+            seat = emptySeats.ToArray()[Random.Range(0, emptySeats.Count())];
         }
 
-        seat = emptySeats.ToArray()[Random.Range(0, emptySeats.Count())];
-
         seat.guest = this; // reserve
+
         agent.SetDestination(seat.transform.position);
         character.transform.localRotation = Quaternion.Euler(90, 0, 0);
+
+        if (preferredSeat == null && seat.group != null && seat.group.Length > 0)
+        {
+            return seat.group.Where(s =>
+            {
+                return s != seat && s.guest == null;
+            }).ToArray();
+        }
+        return null;
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
