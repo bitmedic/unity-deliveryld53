@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f62d7d1e002808d409d14d0fa09fad41, type: 3}
   m_Name: TutorialStepSO_Step9
   m_EditorClassIdentifier: 
-  tutorialStpeText: ... or don't. I'm not your mother
+  tutorialStpeText: Try to keep on your feet until last call. Or don't... Who am
+    I to tell you what to do?
   tutorialstepSprite: {fileID: 0}

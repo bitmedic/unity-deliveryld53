@@ -2775,6 +2775,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d203a40ce43fd7d4c8ca38e7c5bd6da5, type: 2}
   - {fileID: 11400000, guid: b819b4729b77aca40bc142b1a30d6b37, type: 2}
   - {fileID: 11400000, guid: 37e0dc5d5d3b1404abbc23aa5ac90c3f, type: 2}
+  - {fileID: 11400000, guid: 4ab2db38c5a294c44943b2cfe95832de, type: 2}
+  - {fileID: 11400000, guid: e97d9fc63cc1ac04f8498c75dc956153, type: 2}
+  - {fileID: 11400000, guid: c2f8c790101bd2443a61e074191731d6, type: 2}
+  - {fileID: 11400000, guid: 2d76496f71b0bee4ebd3af9d87ee6fcf, type: 2}
+  - {fileID: 11400000, guid: b8ff9754ef315134d86ee3eef3616da6, type: 2}
+  - {fileID: 11400000, guid: 0b6ef681c7f33e442b5706bd2c014323, type: 2}
+  - {fileID: 11400000, guid: a4c98e1974991b245a901035e103bef3, type: 2}
+  - {fileID: 11400000, guid: 696f29b298b4bcb40b5e43182234aaec, type: 2}
   textTutorialStep: {fileID: 1321104721}
   backButton: {fileID: 1135152081}
 --- !u!114 &1778588691

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f62d7d1e002808d409d14d0fa09fad41, type: 3}
   m_Name: TutorialStepSO_Step2
   m_EditorClassIdentifier: 
-  tutorialStpeText: If you don't know, you can walk with the W/A/S/D keys
+  tutorialStpeText: Navigate your bar with W/A/S/D or a controller of your choice.
   tutorialstepSprite: {fileID: 0}
