@@ -23,6 +23,7 @@ public partial class Guest : MonoBehaviour
     public ParticleSystem moneyParticles;
     private Animator walkingAnimation;
     private StepsAudioController walkingAudio;
+    private BackgroundNoiseAudioController backgroundAudio;
 
     [Header("Debug")]
     [SerializeField] private float nextOrder;
@@ -49,6 +50,7 @@ public partial class Guest : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
         walkingAudio = GetComponentInChildren<StepsAudioController>();
+        backgroundAudio = GetComponentInChildren<BackgroundNoiseAudioController>();
         character = transform.Find("Character");
         barZone = GameObject.FindAnyObjectByType<CamTriggerZone>();
         annoyedDisplay.SetActive(false);
@@ -94,6 +96,7 @@ public partial class Guest : MonoBehaviour
         bool isWalking = (state == GuestState.Entering || state == GuestState.Leaving);
         if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", isWalking);
         walkingAudio.isWalking = isWalking;
+        backgroundAudio.isWalking = isWalking;
     }
 
     public OrderType TakeOrder(DrunkPlayer player)
