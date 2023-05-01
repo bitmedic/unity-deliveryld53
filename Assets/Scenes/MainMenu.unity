@@ -414,8 +414,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 040f5831d32c35d418a0e13a754ac680, type: 2}
-  m_sharedMaterial: {fileID: 1726644115268853193, guid: 040f5831d32c35d418a0e13a754ac680, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2e5c169331111da438f3e5b5e7a7dc09, type: 2}
+  m_sharedMaterial: {fileID: 853536267681231315, guid: 2e5c169331111da438f3e5b5e7a7dc09, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -549,8 +549,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Ludum Dare 53
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 040f5831d32c35d418a0e13a754ac680, type: 2}
-  m_sharedMaterial: {fileID: 1726644115268853193, guid: 040f5831d32c35d418a0e13a754ac680, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2e5c169331111da438f3e5b5e7a7dc09, type: 2}
+  m_sharedMaterial: {fileID: 853536267681231315, guid: 2e5c169331111da438f3e5b5e7a7dc09, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -760,8 +760,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: created by
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 040f5831d32c35d418a0e13a754ac680, type: 2}
-  m_sharedMaterial: {fileID: 1726644115268853193, guid: 040f5831d32c35d418a0e13a754ac680, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2e5c169331111da438f3e5b5e7a7dc09, type: 2}
+  m_sharedMaterial: {fileID: 853536267681231315, guid: 2e5c169331111da438f3e5b5e7a7dc09, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1352,8 +1352,8 @@ MonoBehaviour:
 
     noskro'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 040f5831d32c35d418a0e13a754ac680, type: 2}
-  m_sharedMaterial: {fileID: 1726644115268853193, guid: 040f5831d32c35d418a0e13a754ac680, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2e5c169331111da438f3e5b5e7a7dc09, type: 2}
+  m_sharedMaterial: {fileID: 853536267681231315, guid: 2e5c169331111da438f3e5b5e7a7dc09, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1490,8 +1490,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 040f5831d32c35d418a0e13a754ac680, type: 2}
-  m_sharedMaterial: {fileID: 1726644115268853193, guid: 040f5831d32c35d418a0e13a754ac680, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2e5c169331111da438f3e5b5e7a7dc09, type: 2}
+  m_sharedMaterial: {fileID: 853536267681231315, guid: 2e5c169331111da438f3e5b5e7a7dc09, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2228,8 +2228,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Spot customer orders and take  them by bumping into your customers (carefully)
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 040f5831d32c35d418a0e13a754ac680, type: 2}
-  m_sharedMaterial: {fileID: 1726644115268853193, guid: 040f5831d32c35d418a0e13a754ac680, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2e5c169331111da438f3e5b5e7a7dc09, type: 2}
+  m_sharedMaterial: {fileID: 853536267681231315, guid: 2e5c169331111da438f3e5b5e7a7dc09, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2363,8 +2363,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Next
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 040f5831d32c35d418a0e13a754ac680, type: 2}
-  m_sharedMaterial: {fileID: 1726644115268853193, guid: 040f5831d32c35d418a0e13a754ac680, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2e5c169331111da438f3e5b5e7a7dc09, type: 2}
+  m_sharedMaterial: {fileID: 853536267681231315, guid: 2e5c169331111da438f3e5b5e7a7dc09, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
