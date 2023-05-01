@@ -17,7 +17,8 @@ public class BarManager : MonoBehaviour
     public AnimationCurve guestSpawnOverTime;
     public int money;
     public Cinemachine.CinemachineVirtualCamera fullBarVCam;
-    public Canvas gameOverScreen;
+
+    public FinalScoreController finalScore;
 
     private void Awake()
     {
@@ -53,7 +54,7 @@ public class BarManager : MonoBehaviour
             enabled = false;
             DrunkPlayer.Instance.EnableControls(false);
             fullBarVCam.enabled = true;
-            gameOverScreen.gameObject.SetActive(true);
+            finalScore.ShowFinalScore(money, DrunkPlayer.Instance.pegel);
 
             CancelInvoke();
 

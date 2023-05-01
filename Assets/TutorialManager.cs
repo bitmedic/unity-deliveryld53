@@ -15,14 +15,26 @@ public class TutorialManager : MonoBehaviour
 
     public Button backButton;
 
+    private Animator animator;
+
+    private float timer = 10;
+
     // Update is called once per frame
     void Start()
     {
         ShowTutorisalStep();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
+        if (timer <= 0)
+        {
+            NextStep();
+            timer = 5;
+        }
+
+        timer -= Time.deltaTime;
     }
 
     private void ShowTutorisalStep()
@@ -36,9 +48,19 @@ public class TutorialManager : MonoBehaviour
             backButton.gameObject.SetActive(true);
         }
 
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
 
+        animator.SetTrigger("NextStep");
+        //textTutorialStep.text = tutiorialSteps[tutorialStep].tutorialStpeText;
+
+    }
+
+    public void SetTutorialText()
+    {
         textTutorialStep.text = tutiorialSteps[tutorialStep].tutorialStpeText;
-
     }
 
     public void NextStep()
@@ -48,6 +70,7 @@ public class TutorialManager : MonoBehaviour
         {
             tutorialStep = 0;
         }
+        timer = 5;
         ShowTutorisalStep();
     }
 
@@ -58,8 +81,10 @@ public class TutorialManager : MonoBehaviour
         {
             tutorialStep = tutiorialSteps.Count - 1;
         }
+        timer = 5;
         ShowTutorisalStep();
     }
+
 
     public void StartGame()
     {

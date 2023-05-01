@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f62d7d1e002808d409d14d0fa09fad41, type: 3}
   m_Name: TutorialStepSO_Step1
   m_EditorClassIdentifier: 
-  tutorialStpeText: You and your customers all have way to healthy livers. Your job
-    is to help them de-liver
+  tutorialStpeText: Since livers are the main cause of human death you  commence
+    upon the quest to help every human to de-liver their bodies.
   tutorialstepSprite: {fileID: 0}

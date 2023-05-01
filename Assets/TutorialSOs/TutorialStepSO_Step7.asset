@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f62d7d1e002808d409d14d0fa09fad41, type: 3}
   m_Name: TutorialStepSO_Step7
   m_EditorClassIdentifier: 
-  tutorialStpeText: What to do next? That is your question? Bump into them again
-    to deliver the drinks
+  tutorialStpeText: ' After delivering the orders - yes, just bump into the customers
+    again - feel the reward of love and kindness.'
   tutorialstepSprite: {fileID: 0}

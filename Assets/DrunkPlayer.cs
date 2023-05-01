@@ -62,43 +62,42 @@ public class DrunkPlayer : MonoBehaviour
                 strafing = true;
             }
             input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        }
 
-        playerSpeed = playerSpeedBase + pegel * playerSpeedPegelMulti * playerSpeedBase;
-        float offsetX = drunknessAmount * (Mathf.PerlinNoise1D(Time.time * drunknessSpeed) - 0.5f); // Mathf.Sin(Time.time * drunknessSpeed);
-        float offsetY = drunknessAmount * (Mathf.PerlinNoise1D(Time.time * drunknessSpeed) - 0.5f); // Mathf.Sin(Time.time * drunknessSpeed);
-        Vector3 swerveTarget = input + new Vector3(offsetX, offsetY, 0) * pegel; // input + offset
+            playerSpeed = playerSpeedBase + pegel * playerSpeedPegelMulti * playerSpeedBase;
+            float offsetX = drunknessAmount * (Mathf.PerlinNoise1D(Time.time * drunknessSpeed) - 0.5f); // Mathf.Sin(Time.time * drunknessSpeed);
+            float offsetY = drunknessAmount * (Mathf.PerlinNoise1D(Time.time * drunknessSpeed) - 0.5f); // Mathf.Sin(Time.time * drunknessSpeed);
+            Vector3 swerveTarget = input + new Vector3(offsetX, offsetY, 0) * pegel; // input + offset
 
-        swerveTarget = swerveTarget.normalized;
+            swerveTarget = swerveTarget.normalized;
 
-        if (input.magnitude == 0) // only if player not moves at all
-        {
-            if (pegel <= 0.6f)
+            if (input.magnitude == 0) // only if player not moves at all
             {
-                swerveTarget *= 0.01f; // swaying in place
-            }
-            else if (pegel <= 1.2f)
-            {
-                swerveTarget *= 0.05f; // swaying in place
+                if (pegel <= 0.6f)
+                {
+                    swerveTarget *= 0.01f; // swaying in place
+                }
+                else if (pegel <= 1.2f)
+                {
+                    swerveTarget *= 0.05f; // swaying in place
+                }
+                else
+                {
+                    swerveTarget *= 0.1f; // swaying in place
+                }
+
+                isWalking = false;
+                if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", false);
             }
             else
             {
-                swerveTarget *= 0.1f; // swaying in place
+                //UpdateRotation(transform, Vector3.zero, input);
+                if (!strafing) UpdateRotation(Vector3.zero, swerveTarget);
+                isWalking = true;
+                if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", true);
             }
 
-            isWalking = false;
-            if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", false);
+            transform.position += swerveTarget * playerSpeed * Time.deltaTime;
         }
-        else
-        {
-            //UpdateRotation(transform, Vector3.zero, input);
-            if (!strafing) UpdateRotation(Vector3.zero, swerveTarget);
-            isWalking = true;
-            if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", true);
-        }
-
-        transform.position += swerveTarget * playerSpeed * Time.deltaTime;
-
 
         if (timerSound <= 0)
         {

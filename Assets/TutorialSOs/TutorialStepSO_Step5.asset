@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f62d7d1e002808d409d14d0fa09fad41, type: 3}
   m_Name: TutorialStepSO_Step5
   m_EditorClassIdentifier: 
-  tutorialStpeText: You can remember up to 5 orders at the same time
+  tutorialStpeText: A maximum of 5 orders sound about right to remember in your absolutely
+    normally functioning brain.
   tutorialstepSprite: {fileID: 0}

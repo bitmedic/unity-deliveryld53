@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f62d7d1e002808d409d14d0fa09fad41, type: 3}
   m_Name: TutorialStepSO_Step8
   m_EditorClassIdentifier: 
-  tutorialStpeText: Watch out that you don't drink too much yourself during you shift
+  tutorialStpeText: .. and cash. They should give you cash!
   tutorialstepSprite: {fileID: 0}

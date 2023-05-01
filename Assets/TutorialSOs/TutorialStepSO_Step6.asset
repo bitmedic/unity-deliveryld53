@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f62d7d1e002808d409d14d0fa09fad41, type: 3}
   m_Name: TutorialStepSO_Step6
   m_EditorClassIdentifier: 
-  tutorialStpeText: Pour their drinks. Where? Behind the bar of cause!
+  tutorialStpeText: Get behind the counter to pour those drinks. And don't forget
+    to get one for yourself!
   tutorialstepSprite: {fileID: 0}
