@@ -31,6 +31,7 @@ public class RandomCharacterCreator : MonoBehaviour
     public List<Color> shirtColors;
     public List<Color> pantsColors;
     public List<Color> shoeColors;
+    public Color pinkHairColor;
 
 
     void Start()
@@ -56,7 +57,7 @@ public class RandomCharacterCreator : MonoBehaviour
 
         if (randomHair == spritesHead_Hairs.Count - 1)
         {
-            spriteHead_Hair.color = new Color(236, 35, 153);
+            spriteHead_Hair.color = pinkHairColor;
         }
         else
         {
