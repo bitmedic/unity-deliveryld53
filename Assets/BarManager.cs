@@ -45,4 +45,18 @@ public class BarManager : MonoBehaviour
             }
         }
     }
+
+    public Guest FindGuestWithOpenOrder()
+    {
+        Guest[] guests = (Guest[])FindObjectsOfType(typeof(Guest));
+
+        var waitingGuests = guests.Where(g => { return g.state == Guest.GuestState.HasOrdered; }).ToList();
+
+        if (waitingGuests.Count > 0)
+        {
+            return waitingGuests[Random.Range(0, waitingGuests.Count)];
+        }
+
+        return null;
+    }
 }

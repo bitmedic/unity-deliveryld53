@@ -17,6 +17,7 @@ public class DrunkPlayer : MonoBehaviour
 
     private Animator walkingAnimation;
     private Transform character;
+    private OrderAndDeliver orders;
 
     private bool controlsEnabled;
 
@@ -24,6 +25,7 @@ public class DrunkPlayer : MonoBehaviour
     {
         Instance = this;
         walkingAnimation = GetComponentInChildren<Animator>();
+        orders = GetComponent<OrderAndDeliver>();
         character = transform.Find("Character");
         controlsEnabled = true;
         playerSpeed = playerSpeedBase;
@@ -34,11 +36,15 @@ public class DrunkPlayer : MonoBehaviour
         bool strafing = false; // don't rotate while moving
         Vector3 input = Vector2.zero;
 
-        if (controlsEnabled) {
+        if (controlsEnabled)
+        {
             if (Input.GetButtonDown("Jump"))
             {
-                pegel += .1f;
-                playerSpeed = playerSpeedBase * (1 + pegel) * playerSpeedPegelMulti;
+                if (orders.StealRandomDrink())
+                {
+                    pegel += .1f;
+                    playerSpeed = playerSpeedBase * (1 + pegel) * playerSpeedPegelMulti;
+                }
             }
 
             if (Input.GetKey(KeyCode.LeftShift))
@@ -54,7 +60,7 @@ public class DrunkPlayer : MonoBehaviour
         Vector3 swerveTarget = input + new Vector3(offsetX, offsetY, 0) * pegel; // input + offset
 
         swerveTarget = swerveTarget.normalized;
-
+        
         if (input.magnitude == 0) // only if player not moves at all
         {
             swerveTarget *= 0.1f; // swaying in place
