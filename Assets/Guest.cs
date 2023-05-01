@@ -18,6 +18,7 @@ public partial class Guest : MonoBehaviour
     public GameObject annoyedDisplay;
     public ParticleSystem moneyParticles;
     private Animator walkingAnimation;
+    private StepsAudioController walkingAudio;
 
     [Header("Debug")]
     [SerializeField] private float nextOrder;
@@ -43,6 +44,7 @@ public partial class Guest : MonoBehaviour
         walkingAnimation = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
+        walkingAudio = GetComponentInChildren<StepsAudioController>();
         character = transform.Find("Character");
         barZone = GameObject.FindAnyObjectByType<CamTriggerZone>();
         annoyedDisplay.SetActive(false);
@@ -86,6 +88,7 @@ public partial class Guest : MonoBehaviour
         }
 
         if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", state == GuestState.Entering || state == GuestState.Leaving);
+        walkingAudio.isWalking = state == GuestState.Entering || state == GuestState.Leaving;
     }
 
     private void FixedUpdate()

@@ -15,20 +15,30 @@ public class DrunkPlayer : MonoBehaviour
     public float drunknessAmount; // how strong the extend of the sway is
     public float drunknessSpeed; // how much/fast the movement direction changes 
 
+    private PlayerArmTrayController playerTray;
+    public List<AudioClip> traySounds;
+    public AudioSource audioSource;
+    private float timerSound = 0;
+
     private Animator walkingAnimation;
     private Transform character;
     private OrderAndDeliver orders;
+    private StepsAudioController walkingAudio;
 
     private bool controlsEnabled;
+    private bool isWalking;
 
     void Awake()
     {
         Instance = this;
         walkingAnimation = GetComponentInChildren<Animator>();
         orders = GetComponent<OrderAndDeliver>();
+        playerTray = GetComponent<PlayerArmTrayController>();
+        walkingAudio = GetComponentInChildren<StepsAudioController>();
         character = transform.Find("Character");
         controlsEnabled = true;
         playerSpeed = playerSpeedBase;
+        isWalking = false;
     }
 
     void Update()
@@ -59,21 +69,39 @@ public class DrunkPlayer : MonoBehaviour
         Vector3 swerveTarget = input + new Vector3(offsetX, offsetY, 0) * pegel; // input + offset
 
         swerveTarget = swerveTarget.normalized;
-        
+
         if (input.magnitude == 0) // only if player not moves at all
         {
             swerveTarget *= 0.1f; // swaying in place
+            isWalking = false;
             if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", false);
         }
         else
         {
             //UpdateRotation(transform, Vector3.zero, input);
             if (!strafing) UpdateRotation(Vector3.zero, swerveTarget);
+            isWalking = true;
             if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", true);
         }
 
         transform.position += swerveTarget * playerSpeed * Time.deltaTime;
+
+
+        if (timerSound <= 0)
+        {
+            if (isWalking && playerTray.carriedItems.Count > 0)
+            {
+                int randomSound = Random.Range(0, traySounds.Count);
+                audioSource.PlayOneShot(traySounds[randomSound]);
+            }
+
+            timerSound = Random.Range(1f, 10f);
+        }
+        timerSound -= Time.deltaTime;
+
+        walkingAudio.isWalking = isWalking;
     }
+    
 
     void UpdateRotation(Vector3 pos1, Vector3 pos2)
     {
