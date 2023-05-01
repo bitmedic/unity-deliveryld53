@@ -197,23 +197,39 @@ public partial class Guest : MonoBehaviour
         seat.guest = null;
     }
 
-    public void FindPlace()
+    public Seat[] FindPlace(Seat preferredSeat)
     {
-        var seats = GameObject.FindObjectsOfType<Seat>();
-
-        var emptySeats = seats.Where(s => { return s.guest == null; });
-        if (emptySeats.Count() == 0)
+        if (preferredSeat != null && preferredSeat.guest == null)
         {
-            Debug.Log("No more free seats.");
-            Destroy(this.gameObject);
-            return;
+            seat = preferredSeat;
+        }
+        else
+        {
+            var seats = GameObject.FindObjectsOfType<Seat>();
+
+            var emptySeats = seats.Where(s => { return s.guest == null; });
+            if (emptySeats.Count() == 0)
+            {
+                Debug.Log("No more free seats.");
+                Destroy(this.gameObject);
+                return null;
+            }
+            seat = emptySeats.ToArray()[Random.Range(0, emptySeats.Count())];
         }
 
-        seat = emptySeats.ToArray()[Random.Range(0, emptySeats.Count())];
-
         seat.guest = this; // reserve
+
         agent.SetDestination(seat.transform.position);
         character.transform.localRotation = Quaternion.Euler(90, 0, 0);
+
+        if (preferredSeat == null && seat.group != null && seat.group.Length > 0)
+        {
+            return seat.group.Where(s =>
+            {
+                return s != seat && s.guest == null;
+            }).ToArray();
+        }
+        return null;
     }
 
     public void OnTriggerEnter2D(Collider2D collision)

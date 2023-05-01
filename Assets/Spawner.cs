@@ -24,7 +24,16 @@ public class Spawner : MonoBehaviour
         while (!BarManager.Instance.lastCall) // no spawns after last call
         {
             Guest guest = Instantiate(spawnedObject, transform.position, Quaternion.identity);
-            guest.FindPlace();
+            Seat[] linkedFreeSeats = guest.FindPlace(null);
+            if (linkedFreeSeats != null)
+            {
+                Debug.Log("linked free seats: " + linkedFreeSeats);
+                foreach(var s in linkedFreeSeats)
+                {
+                    Guest g = Instantiate(spawnedObject, transform.position, Quaternion.identity);
+                    g.FindPlace(s);
+                }
+            }
             float delay = minSpawnDelay / BarManager.Instance.GetCurrentSpawnRate();
             Debug.Log("Next guest in " + delay + " seconds.");
             yield return new WaitForSeconds(delay);
