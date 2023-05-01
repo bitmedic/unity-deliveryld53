@@ -65,23 +65,23 @@ public class DrunknessEffectController : MonoBehaviour
 
         if (pegel >= 0.3f)
         {
-            if (timerToBlink < -0.3f)
-            {
-                timerToBlink = Random.Range(10, 30) * (0.3f / pegel);
-                vignette.smoothness.value = VignetteDefaultSmoothness + (VignetteDefaultSmoothness * pegel / 4);
-                vignette.intensity.value = VignetteDefaultIntensity + (VignetteDefaultSmoothness * pegel / 4);
-            }
-            else if (timerToBlink <= -0.1f)
-            {
-                vignette.smoothness.value = Mathf.Lerp(1, VignetteDefaultSmoothness, -5 * (timerToBlink + 0.1f));
-                vignette.intensity.value = Mathf.Lerp(1, VignetteDefaultIntensity, -5 * (timerToBlink + 0.1f));
-            }
-            else if (timerToBlink <= 0)
-            {
-                vignette.smoothness.value = Mathf.Lerp(VignetteDefaultSmoothness, 1, -10 * timerToBlink);
-                vignette.intensity.value = Mathf.Lerp(VignetteDefaultIntensity, 1, -10 * timerToBlink);
-            }
-            timerToBlink -= Time.deltaTime;
+            vignette.smoothness.value = VignetteDefaultSmoothness + (VignetteDefaultSmoothness * pegel / 4);
+            vignette.intensity.value = VignetteDefaultIntensity + (VignetteDefaultSmoothness * pegel / 4);
+            //if (timerToBlink < -0.3f)
+            //{
+            //    timerToBlink = Random.Range(10, 30) * (0.3f / pegel);
+            //}
+            //else if (timerToBlink <= -0.1f)
+            //{
+            //    vignette.smoothness.value = Mathf.Lerp(1, VignetteDefaultSmoothness, -5 * (timerToBlink + 0.1f));
+            //    vignette.intensity.value = Mathf.Lerp(1, VignetteDefaultIntensity, -5 * (timerToBlink + 0.1f));
+            //}
+            //else if (timerToBlink <= 0)
+            //{
+            //    vignette.smoothness.value = Mathf.Lerp(VignetteDefaultSmoothness, 1, -10 * timerToBlink);
+            //    vignette.intensity.value = Mathf.Lerp(VignetteDefaultIntensity, 1, -10 * timerToBlink);
+            //}
+            //timerToBlink -= Time.deltaTime;
         }
         else
         {

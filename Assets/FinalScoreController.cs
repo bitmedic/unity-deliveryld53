@@ -38,7 +38,7 @@ public class FinalScoreController : MonoBehaviour
         int score = money * (int)Mathf.Round(pegel * 100);
         textScore.text = score.ToString();
 
-        Invoke("setFinished", 0.5f);
+        Invoke("setFinished", 5f);
     }
 
     private void setFinished()
