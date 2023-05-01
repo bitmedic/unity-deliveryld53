@@ -10,6 +10,8 @@ public class DrunkPlayer : MonoBehaviour
     public static DrunkPlayer Instance { get; private set; }
 
     public float playerSpeed;
+    public float playerSpeedBase = 3;
+    public float playerSpeedPegelMulti = 2;
     public float drunknessAmount; // how strong the extend of the sway is
     public float drunknessSpeed; // how much/fast the movement direction changes 
 
@@ -24,6 +26,7 @@ public class DrunkPlayer : MonoBehaviour
         walkingAnimation = GetComponentInChildren<Animator>();
         character = transform.Find("Character");
         controlsEnabled = true;
+        playerSpeed = playerSpeedBase;
     }
 
     void Update()
@@ -31,7 +34,13 @@ public class DrunkPlayer : MonoBehaviour
         bool strafing = false; // don't rotate while moving
         Vector3 input = Vector2.zero;
 
-        if (controlsEnabled) { 
+        if (controlsEnabled) {
+            if (Input.GetButtonDown("Jump"))
+            {
+                pegel += .1f;
+                playerSpeed = playerSpeedBase * (1 + pegel) * playerSpeedPegelMulti;
+            }
+
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 strafing = true;
