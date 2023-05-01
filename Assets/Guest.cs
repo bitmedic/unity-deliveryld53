@@ -84,6 +84,8 @@ public partial class Guest : MonoBehaviour
             memorizedOrderDisplay.SetActive(false);
             actualOrderDisplay.SetActive(false);
         }
+
+        if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", state == GuestState.Entering || state == GuestState.Leaving);
     }
 
     private void FixedUpdate()
@@ -189,7 +191,6 @@ public partial class Guest : MonoBehaviour
 
         seat.guest = this; // reserve
         agent.SetDestination(seat.transform.position);
-        if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", true);
         character.transform.localRotation = Quaternion.Euler(90, 0, 0);
     }
 
@@ -197,7 +198,6 @@ public partial class Guest : MonoBehaviour
     {
         if (state == GuestState.Entering && collision.gameObject == seat.gameObject)
         {
-            if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", false);
             agent.enabled = false;
             obstacle.enabled = true;
             transform.position = seat.transform.position;
