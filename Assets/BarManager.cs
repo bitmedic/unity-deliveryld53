@@ -8,6 +8,13 @@ public class BarManager : MonoBehaviour
 {
     public static BarManager Instance { get; private set; }
     public Transform LeaveBarLocation;
+    public float barCloseTime;
+    public float lastCallTime;
+    public float barOpenSince;
+    private float barOpenAt;
+    public bool lastCall;
+    public AnimationCurve guestSpawnOverTime;
+
     private void Awake()
     {
         Instance = this;
@@ -17,32 +24,62 @@ public class BarManager : MonoBehaviour
     void Start()
     {
         InvokeRepeating(nameof(NewOrder), 5f, 10f);
+        barOpenAt = Time.time;
     }
 
     // Update is called once per frame
     void Update()
     {
+        barOpenSince = Time.time - barOpenAt;
 
+
+        if (!lastCall && barOpenSince > lastCallTime)
+        {
+            lastCall = true;
+            var waitingGuests = FindWaitingGuests();
+            foreach (var guest in waitingGuests)
+            {
+                guest.DecideOrder();
+            }
+        }
+
+        if (barOpenSince > barCloseTime)
+        {
+            Debug.Log("Bar closing now");
+            this.enabled = false;
+            CancelInvoke();
+
+            foreach (var guest in FindGuests())
+            {
+                StartCoroutine(guest.LeaveBarIn(Random.Range(1f, 5f)));
+            }
+
+        }
     }
 
-    private void NewOrder()
+    private List<Guest> FindWaitingGuests()
     {
         Guest[] guests = (Guest[])FindObjectsOfType(typeof(Guest));
 
         var waitingGuests = guests.Where(g => { return g.state == Guest.GuestState.WaitingToOrder; }).ToList();
 
+        return waitingGuests;
+    }
+
+    private List<Guest> FindGuests()
+    {
+        Guest[] guests = (Guest[])FindObjectsOfType(typeof(Guest));
+        return guests.ToList();
+    }
+
+    private void NewOrder()
+    {
+        var waitingGuests = FindWaitingGuests();
+
         if (waitingGuests.Count > 0)
         {
             var randomGuest = waitingGuests[Random.Range(0, waitingGuests.Count)];
-            if (randomGuest.CanOrder())
-            {
-                Debug.Log(randomGuest.name + " is ordering");
-                randomGuest.DecideOrder();
-            }
-            else
-            {
-                Debug.Log(randomGuest.name + " is not ready " + randomGuest.state);
-            }
+            randomGuest.DecideOrder();
         }
     }
 
@@ -58,5 +95,15 @@ public class BarManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    public float GetTimePercentage()
+    {
+        return barOpenSince / barCloseTime;
+    }
+
+    public float GetCurrentSpawnRate()
+    {
+        return guestSpawnOverTime.Evaluate(GetTimePercentage());
     }
 }

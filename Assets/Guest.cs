@@ -145,6 +145,8 @@ public partial class Guest : MonoBehaviour
     {
         if (state == GuestState.WaitingToOrder)
         {
+            Debug.Log(name + " is ordering");
+
             var possibleOrders = OrderAndDeliver.Instance.possibleOrders;
             wantedOrder = possibleOrders[Random.Range(0, possibleOrders.Count)];
             state = GuestState.Ordering;
@@ -164,6 +166,11 @@ public partial class Guest : MonoBehaviour
 
     private void LeaveBar()
     {
+        if (BarManager.Instance.lastCall)
+        {
+            return; // do not leave during last call
+        }
+
         Debug.Log(name + " is now leaving");
         state = GuestState.Leaving;
 

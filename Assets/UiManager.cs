@@ -8,6 +8,7 @@ public class UiManager : MonoBehaviour
     public DrunkPlayer sourcePlayer;
 
     public Image pegelBar;
+    public Slider timeDisplay;
 
     // Start is called before the first frame update
     void Start()
@@ -19,5 +20,6 @@ public class UiManager : MonoBehaviour
     void Update()
     {
         pegelBar.fillAmount = sourcePlayer.pegel;
+        timeDisplay.value = BarManager.Instance.GetTimePercentage();
     }
 }
