@@ -172,6 +172,7 @@ public partial class Guest : MonoBehaviour
         character.transform.localRotation = Quaternion.Euler(90, 0f, 0);
         agent.destination = BarManager.Instance.LeaveBarLocation.position;
         wantedOrder = null;
+        orderedOrder = null;
         seat.guest = null;
     }
 

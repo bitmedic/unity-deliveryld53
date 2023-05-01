@@ -27,13 +27,12 @@ public class OrderAndDeliver : MonoBehaviour
     {
         rememberedOrders = new List<OrderType>();
         rememberedOrdersDisplay.SetActive(false);
+        draftTimerDisplay.SetActive(false);
         GetComponent<PlayerArmTrayController>().carriedItems = carryingOrders;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log(name + " :: " + collision.collider.name);
-
         if (collision.collider.tag == "Guest")
         {
             Guest guest = collision.collider.GetComponent<Guest>();
@@ -69,6 +68,21 @@ public class OrderAndDeliver : MonoBehaviour
                 }
             }
         }
+    }
+
+    internal bool StealRandomDrink()
+    {
+        if (carryingOrders.Count > 0)
+        {
+            var guestWithOrder = BarManager.Instance.FindGuestWithOpenOrder();
+            if (guestWithOrder != null) {
+                // TODO display drink timer?
+                carryingOrders.Remove(guestWithOrder.wantedOrder);
+                StartCoroutine(guestWithOrder.LeaveBarIn(1));
+                return true;
+            }
+        }
+        return false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
