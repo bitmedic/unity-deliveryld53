@@ -32,14 +32,14 @@ public class DrunknessEffectController : MonoBehaviour
     public void SetNewPegel(float pegel)
     {
         this.pegel = pegel;
-        timerToBlink = Random.Range(10, 30) * (1 / pegel);
+        timerToBlink = Random.Range(10, 30) * (0.3f / pegel);
     }
 
     private void Update()
     {
         if (this.pegel != player.pegel)
         {
-            timerToBlink = Random.Range(10, 30) * (1 / pegel);
+            timerToBlink = Random.Range(10, 30) * (0.3f / player.pegel);
         }
 
         this.pegel = player.pegel;
@@ -54,7 +54,7 @@ public class DrunknessEffectController : MonoBehaviour
         }
         else
         {
-            this.lensDist = (Mathf.Min(2, pegel)/2) * MaxLensDistortion;
+            this.lensDist = (Mathf.Min(2, pegel) / 2) * MaxLensDistortion;
         }
 
         float sinValue = Mathf.Sin(Time.timeSinceLevelLoad);
@@ -63,21 +63,23 @@ public class DrunknessEffectController : MonoBehaviour
                 
         lensDistortion.intensity.value = lensDistortionValue;
 
-        if (pegel >= 1.5f)
+        if (pegel >= 0.3f)
         {
-            if (timerToBlink < -1)
+            if (timerToBlink < -0.3f)
             {
-                timerToBlink = Random.Range(10, 30) * (1 / pegel);
+                timerToBlink = Random.Range(10, 30) * (0.3f / pegel);
+                vignette.smoothness.value = VignetteDefaultSmoothness + (VignetteDefaultSmoothness * pegel / 4);
+                vignette.intensity.value = VignetteDefaultIntensity + (VignetteDefaultSmoothness * pegel / 4);
             }
-            else if (timerToBlink <= -0.5)
+            else if (timerToBlink <= -0.1f)
             {
-                vignette.smoothness.value = Mathf.Lerp(1, VignetteDefaultSmoothness, -2 * (timerToBlink + 0.5f));
-                vignette.intensity.value = Mathf.Lerp(1, VignetteDefaultIntensity, -2 * (timerToBlink + 0.5f));
+                vignette.smoothness.value = Mathf.Lerp(1, VignetteDefaultSmoothness, -5 * (timerToBlink + 0.1f));
+                vignette.intensity.value = Mathf.Lerp(1, VignetteDefaultIntensity, -5 * (timerToBlink + 0.1f));
             }
             else if (timerToBlink <= 0)
             {
-                vignette.smoothness.value = Mathf.Lerp(VignetteDefaultSmoothness, 1, -2 * timerToBlink);
-                vignette.intensity.value = Mathf.Lerp(VignetteDefaultIntensity, 1, -2 * timerToBlink);
+                vignette.smoothness.value = Mathf.Lerp(VignetteDefaultSmoothness, 1, -10 * timerToBlink);
+                vignette.intensity.value = Mathf.Lerp(VignetteDefaultIntensity, 1, -10 * timerToBlink);
             }
             timerToBlink -= Time.deltaTime;
         }
