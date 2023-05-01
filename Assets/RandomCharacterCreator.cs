@@ -54,8 +54,15 @@ public class RandomCharacterCreator : MonoBehaviour
         spriteArmRight_Skin.color = skinColors[randomColorSkin];
         spriteHead_Eye.color = eyeColors[randomColorEye];
 
-        spriteHead_Hair.color = hairColors[randomColorHair];
-        
+        if (randomHair == spritesHead_Hairs.Count - 1)
+        {
+            spriteHead_Hair.color = new Color(236 / 256, 35 / 256, 153 / 256);
+        }
+        else
+        {
+            spriteHead_Hair.color = hairColors[randomColorHair];
+        }
+
         spriteBody_Shirt_Long.color = shirtColors[randomColorShirt];
         spriteBody_Shirt_Long.gameObject.SetActive(false);
         spriteBody_Shirt_Sleeveless.color = shirtColors[randomColorShirt];

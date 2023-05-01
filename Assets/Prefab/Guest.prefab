@@ -716,6 +716,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c7ad64fdb8344d444bb5c8c9bd25771e, type: 3}
   - {fileID: 21300000, guid: c7ad64fdb8344d444bb5c8c9bd25771e, type: 3}
   - {fileID: 21300000, guid: c7ad64fdb8344d444bb5c8c9bd25771e, type: 3}
+  - {fileID: 21300000, guid: 4fbcefbe4ac8ef54597b8f57ec81dc72, type: 3}
   eyeColors:
   - {r: 0.383811, g: 0.6461912, b: 0.7075472, a: 1}
   - {r: 0.26032397, g: 0.41897914, b: 0.8490566, a: 1}
