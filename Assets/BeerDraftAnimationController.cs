@@ -9,7 +9,7 @@ public class BeerDraftAnimationController : MonoBehaviour
 
     public void SetPercentage(float percent)
     {
-        LiquidMask.localPosition = new Vector3(0, (3.3f * percent/100), 0f);
+        LiquidMask.localPosition = new Vector3(0, (3.3f * percent/80), 0f);
 
         if (percent >= 80)
         {
