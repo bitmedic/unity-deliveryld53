@@ -9,10 +9,12 @@ public partial class Guest : MonoBehaviour
     [Header("Settings")]
     public float guestSpeed;
     public float minWaitTimeAfterOrder = 20;
-    public float maxWaitTimeAfterOrder = 45;
-    public float minWaitTimeBeforeOrder = 10;
-    public float maxWaitTimeBeforeOrder = 30;
-    public float chanceToOrderAnotherDrink = 50;
+    public float maxWaitTimeAfterOrder = 30;
+    public float minWaitTimeBeforeOrder = 5;
+    public float maxWaitTimeBeforeOrder = 15;
+    public float minDrinkTime = 15;
+    public float maxDrinkTime = 45;
+    public float chanceToOrderAnotherDrink = 75;
 
     [Header("References")]
     public GameObject actualOrderDisplay;
@@ -88,13 +90,10 @@ public partial class Guest : MonoBehaviour
             memorizedOrderDisplay.SetActive(false);
             actualOrderDisplay.SetActive(false);
         }
-
-        if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", state == GuestState.Entering || state == GuestState.Leaving);
-        walkingAudio.isWalking = state == GuestState.Entering || state == GuestState.Leaving;
-    }
-
-    private void FixedUpdate()
-    {
+        
+        bool isWalking = (state == GuestState.Entering || state == GuestState.Leaving);
+        if (walkingAnimation != null) walkingAnimation.SetBool("isWalking", isWalking);
+        walkingAudio.isWalking = isWalking;
     }
 
     public OrderType TakeOrder(DrunkPlayer player)
@@ -128,7 +127,7 @@ public partial class Guest : MonoBehaviour
             wantedOrder = null;
             orderedOrder = null;
             state = GuestState.Drinking;
-            float drinkTime = Random.Range(15, 45);
+            float drinkTime = Random.Range(minDrinkTime, maxDrinkTime);
             StartCoroutine(FinishDrink(drinkTime));
         }
     }
