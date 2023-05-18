@@ -9,9 +9,17 @@ public class FinalScoreController : MonoBehaviour
     public TextMeshProUGUI textMoney;
     public TextMeshProUGUI textPegel;
     public TextMeshProUGUI textScore;
+    public TextMeshProUGUI textRank;
+    public TextMeshProUGUI textTier;
 
     private bool finished = false;
 
+    private Leaderboard leaderboard;
+
+    private void Awake()
+    {
+        leaderboard = (Leaderboard) FindObjectOfType(typeof(Leaderboard));
+    }
 
     private void Start()
     {
@@ -28,14 +36,21 @@ public class FinalScoreController : MonoBehaviour
 
     }
 
-    public void ShowFinalScore(int money, float pegel)
+    public async void ShowFinalScore(int money, float pegel)
     {
         this.gameObject.SetActive(true);
+        
+        int score = money * (int)Mathf.Round(pegel * 100);
+
+        var entry = await leaderboard.SetPlayerScore(score);
+        var scores = await leaderboard.GetHighScores();
+
+        textRank.text = $"(Pos: {entry.Rank+1}/{scores.Total})";
+        textTier.text = $"(Rank: {entry.Tier})";
 
         textMoney.text = money.ToString();
         textPegel.text = ((int)Mathf.Round(pegel * 100)).ToString();
 
-        int score = money * (int)Mathf.Round(pegel * 100);
         textScore.text = score.ToString();
 
         Invoke("setFinished", 5f);
