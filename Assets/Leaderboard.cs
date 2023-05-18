@@ -40,7 +40,9 @@ public class Leaderboard : MonoBehaviour
             Debug.Log("PROBLEM: " + s);
         };
 
-        await authService.SignInAnonymouslyAsync();
+        if (!authService.IsSignedIn) { 
+            await authService.SignInAnonymouslyAsync();
+        }
     }
 
     private async void Init()
