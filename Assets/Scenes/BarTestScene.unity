@@ -4300,6 +4300,58 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1809986122927881615, guid: be5c9f57427ca5342aac357aed183495, type: 3}
+      propertyPath: m_text
+      value: 'Your best: 0'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1809986122927881615, guid: be5c9f57427ca5342aac357aed183495, type: 3}
+      propertyPath: m_fontSize
+      value: 48
+      objectReference: {fileID: 0}
+    - target: {fileID: 1809986122927881615, guid: be5c9f57427ca5342aac357aed183495, type: 3}
+      propertyPath: m_margin.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1809986122927881615, guid: be5c9f57427ca5342aac357aed183495, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 48
+      objectReference: {fileID: 0}
+    - target: {fileID: 1809986122927881615, guid: be5c9f57427ca5342aac357aed183495, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1809986122927881615, guid: be5c9f57427ca5342aac357aed183495, type: 3}
+      propertyPath: m_enableWordWrapping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4182389468134666296, guid: be5c9f57427ca5342aac357aed183495, type: 3}
+      propertyPath: m_text
+      value: 'Rank: Steward (123/987)'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4182389468134666296, guid: be5c9f57427ca5342aac357aed183495, type: 3}
+      propertyPath: m_fontSize
+      value: 46.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4182389468134666296, guid: be5c9f57427ca5342aac357aed183495, type: 3}
+      propertyPath: m_margin.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4182389468134666296, guid: be5c9f57427ca5342aac357aed183495, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 48
+      objectReference: {fileID: 0}
+    - target: {fileID: 4182389468134666296, guid: be5c9f57427ca5342aac357aed183495, type: 3}
+      propertyPath: m_fontSizeMin
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4182389468134666296, guid: be5c9f57427ca5342aac357aed183495, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4182389468134666296, guid: be5c9f57427ca5342aac357aed183495, type: 3}
+      propertyPath: m_enableWordWrapping
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4885529616454253161, guid: be5c9f57427ca5342aac357aed183495, type: 3}
       propertyPath: m_Camera
       value: 

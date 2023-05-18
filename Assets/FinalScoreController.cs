@@ -46,7 +46,7 @@ public class FinalScoreController : MonoBehaviour
         var scores = await leaderboard.GetHighScores();
 
         textRank.text = $"Your best: {entry.Score}";
-        textTier.text = $"Rank: {entry.Tier} (Pos {entry.Rank + 1}/{scores.Total})";
+        textTier.text = $"Rank: {entry.Tier} ({entry.Rank + 1}/{scores.Total})";
 
         textMoney.text = money.ToString();
         textPegel.text = ((int)Mathf.Round(pegel * 100)).ToString();
